@@ -1,0 +1,19 @@
+# Build output. Cloudflare Pages runs build.py on every push and publishes
+# dist/, so committing it would just be a second copy that can go stale.
+dist/
+
+# Packaged copies - the repo is the source of truth now.
+*.zip
+site-mirror.tar.gz
+
+# Local preview copies made by double-clicking a zip in Finder.
+racfit-site-full*/
+
+# QA scaffolding
+_qafonts/
+_idcheck/
+
+# macOS / Python
+.DS_Store
+__pycache__/
+*.pyc

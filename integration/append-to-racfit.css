@@ -1,0 +1,10 @@
+/* ---------- RacFit AI assistant ----------
+   z-index 890 puts it under the header (900) and under the mobile nav overlay
+   (950), so opening the burger menu covers the assistant rather than the
+   assistant floating over the navigation. */
+#racfit-ai-frame{
+  position:fixed;right:0;bottom:0;z-index:890;
+  border:0;background:transparent;
+  transition:width .28s var(--ease),height .28s var(--ease);
+}
+@media(prefers-reduced-motion:reduce){#racfit-ai-frame{transition:none}}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>H1 leading options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{ --brand:#295DA8; --brand-deep:#102748; --optic:#D9F53C; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--brand-deep);color:#fff;font-family:"Barlow",system-ui,sans-serif}
+  header{padding:34px clamp(20px,4vw,56px) 26px;border-bottom:6px solid var(--optic)}
+  .eyebrow{
+    font-family:"Barlow Condensed",sans-serif;font-weight:600;text-transform:uppercase;
+    letter-spacing:.16em;font-size:.8rem;color:var(--optic);margin:0 0 10px;
+  }
+  h1.page{
+    font-family:"Anton",Impact,sans-serif;font-weight:400;text-transform:uppercase;
+    font-size:clamp(1.9rem,4.4vw,2.9rem);line-height:1;letter-spacing:-.005em;margin:0;
+  }
+  header p{max-width:66ch;margin:14px 0 0;color:rgba(255,255,255,.82);font-size:1rem}
+  code{
+    font-family:ui-monospace,Menlo,monospace;font-size:.9em;
+    background:rgba(255,255,255,.12);padding:1px 6px;border-radius:3px;
+  }
+  .facts{
+    display:flex;flex-wrap:wrap;gap:10px 30px;margin:18px 0 0;padding:14px 18px;
+    background:rgba(255,255,255,.07);border-left:3px solid var(--optic);
+    font-size:.94rem;color:rgba(255,255,255,.88);
+  }
+  .facts b{color:#fff}
+
+  .opt{border-bottom:1px solid rgba(255,255,255,.14)}
+  .opt-bar{
+    display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;
+    padding:16px clamp(20px,4vw,56px) 0;
+    font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.14em;
+    font-size:.82rem;color:rgba(255,255,255,.62);
+  }
+  .opt-bar b{color:#fff;font-size:1.05rem;letter-spacing:.1em}
+  .tag{background:var(--optic);color:#28300a;font-weight:600;padding:3px 9px;border-radius:3px;font-size:.72rem;letter-spacing:.1em}
+  .tag.was{background:rgba(255,255,255,.2);color:#fff}
+  .tag.bad{background:#7d2b22;color:#ffd9d4}
+
+  .stage{background:var(--brand);padding:clamp(22px,3vw,40px) clamp(20px,4vw,56px)}
+  .stage h2{
+    font-family:"Anton",Impact,"Arial Narrow Bold",sans-serif;font-weight:400;
+    text-transform:uppercase;letter-spacing:-.005em;
+    font-size:clamp(2.6rem,8.2vw,7rem);margin:0;max-width:16ch;color:#fff;
+    text-shadow:0 6px 40px rgba(0,0,0,.35);
+  }
+  .lh86 h2{line-height:.86}  .lh93 h2{line-height:.93}
+  .lh100 h2{line-height:1}   .lh106 h2{line-height:1.06}
+
+  /* subhead comparison */
+  .lede{
+    font-size:clamp(1.05rem,1.6vw,1.28rem);line-height:1.6;max-width:56ch;
+    margin:22px 0 0;
+  }
+  .lede.was{color:rgba(255,255,255,.80);font-weight:400}
+  .lede.now{color:#fff;font-weight:500}
+
+  footer{padding:26px clamp(20px,4vw,56px) 44px;color:rgba(255,255,255,.7);font-size:.94rem}
+  footer p{max-width:72ch;margin:0 0 12px}
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">goracfit.com &middot; hero headings</p>
+  <h1 class="page">H1 leading<br>options</h1>
+  <p>I measured your Pegasus reference instead of matching it by eye. Its two headline
+     lines sit <b>17% of a cap height</b> apart. Anton's caps fill <b>0.858em</b> &mdash;
+     almost the entire em box &mdash; so for this typeface that works out to
+     <code>line-height: 1</code>, which is now applied.</p>
+  <div class="facts">
+    <span>Reference ink gap <b>17% of cap height</b></span>
+    <span>Anton cap height <b>0.858em</b></span>
+    <span>Match <b>line-height: 1</b></span>
+  </div>
+</header>
+
+<div class="opt lh86">
+  <div class="opt-bar"><b>.86</b> <span>lines touch exactly &mdash; 0% gap</span> <span class="tag was">Original</span></div>
+  <div class="stage"><h2>Community. Health. Happiness.</h2></div>
+</div>
+
+<div class="opt lh93">
+  <div class="opt-bar"><b>.93</b> <span>8% gap &mdash; half the reference</span></div>
+  <div class="stage"><h2>Community. Health. Happiness.</h2></div>
+</div>
+
+<div class="opt lh100">
+  <div class="opt-bar"><b>1.00</b> <span>17% gap &mdash; matches the reference</span> <span class="tag">Applied</span></div>
+  <div class="stage"><h2>Community. Health. Happiness.</h2></div>
+</div>
+
+<div class="opt lh106">
+  <div class="opt-bar"><b>1.06</b> <span>24% gap &mdash; airier than the reference</span></div>
+  <div class="stage"><h2>Community. Health. Happiness.</h2></div>
+</div>
+
+<div class="opt">
+  <div class="opt-bar"><b>Subhead</b> <span>colour &amp; weight</span></div>
+  <div class="stage">
+    <h2 style="line-height:1;font-size:clamp(2rem,4.4vw,3.4rem)">Community. Health.</h2>
+    <p class="lede was">80% white, weight 400 &mdash; RacFit is a tennis, pickleball, fitness and social club serving Buda, South Austin and Kyle.</p>
+    <p class="lede now">Pure white, weight 500 &mdash; RacFit is a tennis, pickleball, fitness and social club serving Buda, South Austin and Kyle.</p>
+  </div>
+  <div class="opt-bar" style="padding-bottom:18px"><span>upper: original &nbsp;&middot;&nbsp; lower: applied, matching the reference subhead</span></div>
+</div>
+
+<footer>
+  <p><b>Where I went wrong last round.</b> You asked for a minimal amount of space and I
+     read it as "tighter", taking it to <code>.78</code>. Because Anton's caps are so
+     tall, <code>.86</code> already had zero gap &mdash; so <code>.78</code> was
+     overlapping the lines by 9% of a cap height, not tightening them. Your reference
+     made the direction clear.</p>
+  <p>This changes <code>.d1</code>, the hero H1, and the hero subhead. Section headings
+     (<code>.d2</code>, like "The best seat in the house.") are still at
+     <code>.86</code> &mdash; where they also touch. Say the word and I'll bring them to
+     match.</p>
+</footer>
+
+</body>
+</html>

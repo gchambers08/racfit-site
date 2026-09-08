@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Page Not Found | RacFit</title>
+<meta name="robots" content="noindex,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/racfit.css">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<style>
+  /* Standalone so a 404 renders even if a path is wrong. Cloudflare Pages also
+     needs this file to exist: without a 404.html it falls back to SPA mode and
+     serves index.html for unknown paths, which would return 200 for every typo
+     and let search engines index infinite soft-404s. */
+  .nf{min-height:78vh;display:flex;align-items:center;background:var(--brand-deep);color:#fff}
+  .nf-in{width:100%;max-width:1640px;margin:0 auto;padding:0 var(--pad)}
+  .nf h1{margin:0 0 18px;max-width:22ch}
+  .nf p{max-width:56ch;font-size:clamp(1.05rem,1.6vw,1.28rem);line-height:1.6;color:#fff;font-weight:500}
+  .nf .btns{margin-top:32px}
+  .nf-links{display:flex;flex-wrap:wrap;gap:10px 26px;margin:34px 0 0;padding:0;list-style:none}
+  .nf-links a{font-family:"Barlow Condensed",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:.94rem;color:var(--optic)}
+  .nf-links a:hover{color:#fff}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="logo" href="/" aria-label="RacFit home">
+      <img src="/assets/logos/racfit-white.png" alt="RacFit" width="420" height="120">
+    </a>
+  </div>
+</header>
+
+<section class="nf">
+  <div class="nf-in">
+    <h1 class="disp d2">That page is<br>out of bounds.</h1>
+    <p>The link you followed does not exist any more. Nothing is broken on your end &mdash; try one of these instead.</p>
+    <div class="btns">
+      <a class="btn btn-primary" href="/">Back to the Home Page</a>
+      <a class="btn btn-ghost" href="/contact">Contact Us</a>
+    </div>
+    <ul class="nf-links">
+      <li><a href="/adult-tennis">Adult Tennis</a></li>
+      <li><a href="/junior-tennis">Junior Tennis</a></li>
+      <li><a href="/pickleball">Pickleball</a></li>
+      <li><a href="/fitness">Fitness</a></li>
+      <li><a href="/membership">Membership</a></li>
+      <li><a href="/juniors">Camps &amp; More</a></li>
+      <li><a href="/cantina">Courtside Cantina</a></li>
+      <li><a href="/events">Events</a></li>
+    </ul>
+  </div>
+</section>
+
+</body>
+</html>

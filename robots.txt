@@ -1,0 +1,136 @@
+# https://www.goracfit.com/robots.txt
+# Reviewed 4 Sep 2026. Notes are deliberate - this file is a policy document as
+# much as a config, and the next person to touch it should know why each line is
+# here.
+
+# ---------------------------------------------------------------------------
+# Search engines: crawl everything.
+# ---------------------------------------------------------------------------
+# 25 pages, no site search, no faceted navigation, no pagination, no printer
+# views - there is no crawl budget to protect and nothing duplicated to hide.
+#
+# Do NOT add Disallow lines for the old WordPress paths (/feed/, /category/,
+# /wp-admin, the blog posts). Every one of them 301s to the new site. A blocked
+# URL is a URL Google cannot fetch, so it never sees the redirect and the link
+# equity from those pages does not transfer. Blocking them would quietly undo
+# the entire redirect map.
+User-agent: *
+Allow: /
+
+# ---------------------------------------------------------------------------
+# Link preview fetchers: must stay allowed.
+# ---------------------------------------------------------------------------
+# These are what build the image-and-title card when someone shares a RacFit
+# link in a post, a text or a group chat. Block them and every share turns into
+# a bare grey URL. They are listed explicitly so a future "block the AI bots"
+# pass does not catch them by accident.
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: Slackbot-LinkExpanding
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+# ---------------------------------------------------------------------------
+# Answer engines: allowed, on purpose.
+# ---------------------------------------------------------------------------
+# "Where can my 8-year-old learn tennis near Buda" is increasingly asked of an
+# assistant rather than typed into a search box. These crawlers cite and link
+# their sources, so being readable by them is a discovery channel, not a
+# giveaway. Blocking them removes RacFit from those answers and replaces it with
+# a competitor.
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# Voice and OS-level assistants - Siri, Spotlight, Alexa. Local business
+# discovery, same argument.
+User-agent: Applebot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+# Fetched because a person asked about a specific RacFit page. Blocking these
+# blocks a human being.
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# ---------------------------------------------------------------------------
+# Bulk scrapers: blocked.
+# ---------------------------------------------------------------------------
+# Archive and resale crawlers. They take the content and send back neither
+# traffic nor a citation, so there is nothing on this side of the trade.
+# robots.txt is advisory - a crawler that wants to ignore this will. Blocking
+# at the CDN or firewall is the only enforcement.
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: omgili
+Disallow: /
+
+# ---------------------------------------------------------------------------
+# Model training: currently allowed. This is the one real decision here.
+# ---------------------------------------------------------------------------
+# These tokens control training use, not search visibility - the answer engines
+# above use separate tokens and are unaffected either way, so blocking these
+# costs nothing in AI search with one exception noted below.
+#
+# Left allowed because the content is club marketing - schedules, programs,
+# coach bios. There is no proprietary asset to protect, and a model that knows
+# RacFit exists in Buda, Texas is a small ongoing benefit.
+#
+# To opt out of training instead, uncomment the block below. Read the caveat
+# first: Google-Extended also governs whether pages can be used to ground
+# Google's AI answers, so blocking it can reduce appearances in AI Overviews.
+# That is a genuine traffic cost, unlike the others.
+#
+# User-agent: GPTBot
+# Disallow: /
+#
+# User-agent: ClaudeBot
+# Disallow: /
+#
+# User-agent: meta-externalagent
+# Disallow: /
+#
+# User-agent: Applebot-Extended
+# Disallow: /
+#
+# User-agent: Google-Extended
+# Disallow: /
+
+# ---------------------------------------------------------------------------
+Sitemap: https://goracfit.com/sitemap.xml
+
+# Canonical host is the apex, goracfit.com. www 301s to it. If that ever
+# changes, HOST in build.py, the host rule in redirects/redirect-map.csv and
+# every <loc> in sitemap.xml have to change together.
