@@ -99,6 +99,15 @@
   }
 }
 </script>
+<!-- Cloudflare Turnstile. Loaded on every page rather than per form so the
+     widget is warm by the time a visitor reaches one. Defers, so it never
+     blocks render. -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<style>
+  /* Honeypot field: off-canvas rather than display:none, because some bots skip
+     hidden inputs but fill positioned ones. Never focusable by a person. */
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+</style>
 </head>
 <body class="no-js">
 <script>document.body.classList.remove("no-js");</script>
@@ -351,7 +360,7 @@
         <ul>
           <li><a href="https://maps.google.com/?q=1390+Robert+S+Light+Blvd,+Buda,+TX+78610" target="_blank" rel="noopener">1390 Robert S. Light Blvd<br>Buda, TX 78610</a></li>
           <li><a href="tel:5122211926">512-221-1926</a></li>
-          <li><a href="mailto:contact@goracfit.com">contact@goracfit.com</a></li>
+          <li><a href="contact.html#form">our contact form</a></li>
           <li><a href="tour.html">Request a Tour</a></li>
           <li style="color:rgba(255,255,255,.7);font-size:.95rem;margin-top:14px">Open daily &middot; 6:00 AM &ndash; 10:00 PM</li>
         </ul>

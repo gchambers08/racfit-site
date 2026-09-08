@@ -99,6 +99,15 @@
   }
 }
 </script>
+<!-- Cloudflare Turnstile. Loaded on every page rather than per form so the
+     widget is warm by the time a visitor reaches one. Defers, so it never
+     blocks render. -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<style>
+  /* Honeypot field: off-canvas rather than display:none, because some bots skip
+     hidden inputs but fill positioned ones. Never focusable by a person. */
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+</style>
 </head>
 <body class="no-js">
 <script>document.body.classList.remove("no-js");</script>

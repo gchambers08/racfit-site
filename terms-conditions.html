@@ -99,6 +99,15 @@
   }
 }
 </script>
+<!-- Cloudflare Turnstile. Loaded on every page rather than per form so the
+     widget is warm by the time a visitor reaches one. Defers, so it never
+     blocks render. -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<style>
+  /* Honeypot field: off-canvas rather than display:none, because some bots skip
+     hidden inputs but fill positioned ones. Never focusable by a person. */
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+</style>
 </head>
 <body class="no-js">
 <script>document.body.classList.remove("no-js");</script>
@@ -233,7 +242,7 @@
       <h2>Owner Information</h2>
       <p>RACFIT OPERATIONS LLC<br>
       Buda, Texas<br>
-      Contact: <a href="mailto:info@goracfit.com">info@goracfit.com</a></p>
+      Contact: info@goracfit.com</p>
 
       <h2>Terms of Use</h2>
       <p>By accessing or using the Application, you confirm that:</p>
@@ -327,7 +336,7 @@
       <p>Our Privacy Policy may change from time to time and all updates will be posted on this page.</p>
 
       <h2>Questions?</h2>
-      <p>Call <a href="tel:5122211926">512-221-1926</a> or email <a href="mailto:info@goracfit.com">info@goracfit.com</a>. See also our <a href="privacy-policy.html">Privacy Policy</a> and <a href="cancellation-policy.html">Cancellation Policy</a>.</p>
+      <p>Call <a href="tel:5122211926">512-221-1926</a> or email info@goracfit.com. See also our <a href="privacy-policy.html">Privacy Policy</a> and <a href="cancellation-policy.html">Cancellation Policy</a>.</p>
 
     </div>
   </div>
@@ -398,7 +407,7 @@
         <ul>
           <li><a href="https://maps.google.com/?q=1390+Robert+S+Light+Blvd,+Buda,+TX+78610" target="_blank" rel="noopener">1390 Robert S. Light Blvd<br>Buda, TX 78610</a></li>
           <li><a href="tel:5122211926">512-221-1926</a></li>
-          <li><a href="mailto:contact@goracfit.com">contact@goracfit.com</a></li>
+          <li><a href="contact.html#form">our contact form</a></li>
           <li><a href="tour.html">Request a Tour</a></li>
           <li style="color:rgba(255,255,255,.7);font-size:.95rem;margin-top:14px">Open daily &middot; 6:00 AM &ndash; 10:00 PM</li>
         </ul>

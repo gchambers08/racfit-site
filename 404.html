@@ -15,13 +15,19 @@
      needs this file to exist: without a 404.html it falls back to SPA mode and
      serves index.html for unknown paths, which would return 200 for every typo
      and let search engines index infinite soft-404s. */
-  .nf{min-height:78vh;display:flex;align-items:center;background:var(--brand-deep);color:#fff}
+  /* Literal fallbacks alongside the tokens. This is the page people see when
+     something has already gone wrong, so it has to stay readable even if
+     racfit.css is slow, blocked or missing - otherwise it renders white on
+     white and the visitor sees nothing at all. */
+  body{margin:0;background:#102748;color:#fff}
+  .nf{min-height:78vh;display:flex;align-items:center;background:var(--brand-deep,#102748);color:#fff}
   .nf-in{width:100%;max-width:1640px;margin:0 auto;padding:0 var(--pad)}
   .nf h1{margin:0 0 18px;max-width:22ch}
   .nf p{max-width:56ch;font-size:clamp(1.05rem,1.6vw,1.28rem);line-height:1.6;color:#fff;font-weight:500}
+  .nf h1{color:#fff}
   .nf .btns{margin-top:32px}
   .nf-links{display:flex;flex-wrap:wrap;gap:10px 26px;margin:34px 0 0;padding:0;list-style:none}
-  .nf-links a{font-family:"Barlow Condensed",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:.94rem;color:var(--optic)}
+  .nf-links a{font-family:"Barlow Condensed",sans-serif,sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:.94rem;color:var(--optic,#D9F53C)}
   .nf-links a:hover{color:#fff}
 </style>
 </head>

@@ -179,7 +179,7 @@
       <p class="lede" style="margin-top:20px">Tell us which camps you are interested in and we will email you as soon as dates and registration open - before spots go public. No obligation, and we will not pass your details on.</p>
     </div>
 
-    <form class="form rv" method="post" action="#" data-mail-form data-mail-to="contact@goracfit.com" data-mail-subject="Camp interest" novalidate style="margin-top:34px">
+    <form class="form rv" method="POST" action="/api/camp-interest" novalidate style="margin-top:34px">
       <div class="form-grid">
         <div class="field">
           <label for="ci-name">Parent / Guardian Name <span class="req" aria-hidden="true">*</span></label>
@@ -220,6 +220,12 @@
           <textarea id="ci-notes" name="notes" placeholder="Weeks you have in mind, questions about extended care, anything we should know."></textarea>
         </div>
       </div>
+          <!-- Honeypot: hidden from people, filled in by most bots. The handler
+               drops any submission that has it set. -->
+          <p class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+          <div class="field wide">
+            <div class="cf-turnstile" data-sitekey="{{TURNSTILE_SITEKEY}}" data-theme="auto"></div>
+          </div>
       <div class="btns" style="margin-top:6px">
         <button class="btn btn-dark" type="submit">Add Me to the List</button>
       </div>

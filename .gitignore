@@ -10,6 +10,7 @@ site-mirror.tar.gz
 racfit-site-full*/
 
 # QA scaffolding
+_qa_out.txt
 _qafonts/
 _idcheck/
 

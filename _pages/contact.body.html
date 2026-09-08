@@ -30,7 +30,7 @@
         <h2 class="disp d2">How can<br>we help?</h2>
         <p class="lede" style="margin-top:20px">Tell us what you are after and we will route it to the right person - membership, coaching, events or hiring.</p>
 
-        <form class="form" method="post" action="#" data-mail-form data-mail-to="info@goracfit.com" data-mail-subject="Website enquiry" novalidate style="margin-top:34px">
+        <form class="form" method="POST" action="/api/contact" novalidate style="margin-top:34px">
           <div class="form-grid">
             <div class="field">
               <label for="c-first">First Name <span class="req" aria-hidden="true">*</span></label>
@@ -61,6 +61,12 @@
               <textarea id="c-message" name="message" placeholder="Tell us a bit more so we can point you at the right person." required></textarea>
             </div>
           </div>
+          <!-- Honeypot: hidden from people, filled in by most bots. The handler
+               drops any submission that has it set. -->
+          <p class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+          <div class="field wide">
+            <div class="cf-turnstile" data-sitekey="{{TURNSTILE_SITEKEY}}" data-theme="auto"></div>
+          </div>
           <div class="btns" style="margin-top:6px">
             <button class="btn btn-dark" type="submit">Send Message</button>
           </div>
@@ -72,7 +78,7 @@
           <h3>Call or Email</h3>
           <dl class="kv" style="margin-top:16px">
             <dt>Phone</dt><dd><a class="arrow-link" href="tel:5122211926">512-221-1926</a></dd>
-            <dt>Email</dt><dd><a class="arrow-link" href="mailto:info@goracfit.com">info@goracfit.com</a></dd>
+            <dt>Email</dt><dd><a class="arrow-link" href="contact.html#form">Contact Us</a></dd>
             <dt>Address</dt><dd>1390 Robert S. Light Blvd<br>Buda, TX 78610</dd>
             <dt>Hours</dt><dd>Open daily &middot; 6:00 AM &ndash; 10:00 PM</dd>
           </dl>

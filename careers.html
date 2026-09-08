@@ -99,6 +99,15 @@
   }
 }
 </script>
+<!-- Cloudflare Turnstile. Loaded on every page rather than per form so the
+     widget is warm by the time a visitor reaches one. Defers, so it never
+     blocks render. -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<style>
+  /* Honeypot field: off-canvas rather than display:none, because some bots skip
+     hidden inputs but fill positioned ones. Never focusable by a person. */
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+</style>
 </head>
 <body class="no-js">
 <script>document.body.classList.remove("no-js");</script>
@@ -264,12 +273,81 @@
   </div>
 </section>
 
+<!-- ============ APPLICATION FORM ============ -->
+<section class="sec light" id="apply">
+  <div class="wrap">
+    <div class="sec-head rv" style="max-width:64ch">
+      <span class="eyebrow on-light">Apply</span>
+      <h2 class="disp d2">Tell us about<br>yourself.</h2>
+      <p class="lede" style="margin-top:20px">Start here and we will come back to you. If a role you want is not listed, send it anyway &mdash; we hire ahead of postings when the right person turns up.</p>
+    </div>
+
+    <form class="form rv" method="POST" action="/api/careers" novalidate style="margin-top:34px">
+      <div class="form-grid">
+        <div class="field">
+          <label for="ap-name">Name <span class="req" aria-hidden="true">*</span></label>
+          <input id="ap-name" name="name" type="text" autocomplete="name" placeholder="Your name" required>
+        </div>
+        <div class="field">
+          <label for="ap-role">Role Applying For <span class="req" aria-hidden="true">*</span></label>
+          <select id="ap-role" name="role" required>
+            <option value="">Select one</option>
+            <option value="Director of Pickleball">Director of Pickleball</option>
+            <option value="Customer Experience Associate">Customer Experience Associate</option>
+            <option value="Tennis Coach">Tennis Coach</option>
+            <option value="Pickleball Coach">Pickleball Coach</option>
+            <option value="Fitness Instructor">Fitness Instructor</option>
+            <option value="Front Desk">Front Desk</option>
+            <option value="Courtside Cantina">Courtside Cantina</option>
+            <option value="ActiveCare / Youth Programs">ActiveCare / Youth Programs</option>
+            <option value="Open application">Something else - open application</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="ap-email">Email Address <span class="req" aria-hidden="true">*</span></label>
+          <input id="ap-email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required>
+        </div>
+        <div class="field">
+          <label for="ap-phone">Phone Number</label>
+          <input id="ap-phone" name="phone" type="tel" autocomplete="tel" placeholder="(512) 555-0123">
+        </div>
+        <div class="field">
+          <label for="ap-available">Availability</label>
+          <input id="ap-available" name="available" type="text" placeholder="Weekday mornings and weekends">
+        </div>
+        <div class="field">
+          <label for="ap-certs">Certifications</label>
+          <input id="ap-certs" name="certs" type="text" placeholder="USPTA, PTR, IPTPA, CPR, group fitness">
+        </div>
+        <div class="field wide">
+          <label for="ap-experience">Relevant Experience</label>
+          <textarea id="ap-experience" name="experience" placeholder="Where you have coached or worked, how long, and the level of player or member you are used to."></textarea>
+        </div>
+        <div class="field wide">
+          <label for="ap-notes">Anything Else?</label>
+          <textarea id="ap-notes" name="notes" placeholder="Why RacFit, questions about the role, anything that would not fit above."></textarea>
+        </div>
+      </div>
+      <!-- Honeypot: hidden from people, filled in by most bots. The handler
+           drops any submission that has it set. -->
+      <p class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+      <div class="field wide">
+        <div class="cf-turnstile" data-sitekey="" data-theme="auto"></div>
+      </div>
+      <div class="btns" style="margin-top:6px">
+        <button class="btn btn-dark" type="submit">Send My Application</button>
+      </div>
+      <p class="form-note"><strong>Your resume:</strong> send it to contact@goracfit.com once you have submitted this form, and we will match it to your application. Questions first? Call 512-221-1926.</p>
+    </form>
+  </div>
+</section>
+
 <section class="cta-band">
   <div class="wrap">
     <h2 class="disp d2 rv">Don&rsquo;t see<br>your role?</h2>
     <p class="rv">We&rsquo;re growing. If you think you belong here, tell us why.</p>
     <div class="btns rv">
-      <a class="btn btn-dark" href="mailto:contact@goracfit.com?subject=Careers%20at%20RacFit">Get in Touch</a>
+      <a class="btn btn-dark" href="#apply">Get in Touch</a>
       <a class="btn btn-outline-dark" href="about.html#team">Meet the Team</a>
     </div>
   </div>
@@ -340,7 +418,7 @@
         <ul>
           <li><a href="https://maps.google.com/?q=1390+Robert+S+Light+Blvd,+Buda,+TX+78610" target="_blank" rel="noopener">1390 Robert S. Light Blvd<br>Buda, TX 78610</a></li>
           <li><a href="tel:5122211926">512-221-1926</a></li>
-          <li><a href="mailto:contact@goracfit.com">contact@goracfit.com</a></li>
+          <li><a href="contact.html#form">our contact form</a></li>
           <li><a href="tour.html">Request a Tour</a></li>
           <li style="color:rgba(255,255,255,.7);font-size:.95rem;margin-top:14px">Open daily &middot; 6:00 AM &ndash; 10:00 PM</li>
         </ul>

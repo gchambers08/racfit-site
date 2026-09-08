@@ -99,6 +99,15 @@
   }
 }
 </script>
+<!-- Cloudflare Turnstile. Loaded on every page rather than per form so the
+     widget is warm by the time a visitor reaches one. Defers, so it never
+     blocks render. -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<style>
+  /* Honeypot field: off-canvas rather than display:none, because some bots skip
+     hidden inputs but fill positioned ones. Never focusable by a person. */
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+</style>
 </head>
 <body class="no-js">
 <script>document.body.classList.remove("no-js");</script>
@@ -217,7 +226,7 @@
     <p class="lede">Give your child a birthday they'll never forget - tennis, pickleball, athletic challenges, digital sports, ping pong and corn hole, all in one high-energy celebration in Buda.</p>
     <div class="btns">
       <a class="btn btn-primary" href="#packages">See Packages</a>
-      <a class="btn btn-ghost" href="mailto:contact@goracfit.com?subject=Birthday%20Party%20Inquiry">Request Info</a>
+      <a class="btn btn-ghost" href="#enquiry">Request Info</a>
     </div>
   </div>
 </section>
@@ -268,7 +277,7 @@
           <li>Access to ping pong, corn hole and the Digital Sports room</li>
           <li>Guests responsible for any decorations</li>
         </ul>
-        <a class="btn btn-outline-dark" href="mailto:contact@goracfit.com?subject=Birthday%20Party%20-%20Package%201">Request Info</a>
+        <a class="btn btn-outline-dark" href="#enquiry">Request Info</a>
       </div>
       <div class="plan feature">
         <span class="plan-flag">Bigger Party</span>
@@ -283,7 +292,7 @@
           <li>Access to ping pong, corn hole and the Digital Sports room</li>
           <li>Guests responsible for any decorations</li>
         </ul>
-        <a class="btn btn-primary" href="mailto:contact@goracfit.com?subject=Birthday%20Party%20-%20Package%202">Request Info</a>
+        <a class="btn btn-primary" href="#enquiry">Request Info</a>
       </div>
     </div>
 
@@ -312,12 +321,76 @@
   </div>
 </section>
 
+<!-- ============ PARTY ENQUIRY ============ -->
+<section class="sec light" id="enquiry">
+  <div class="wrap">
+    <div class="sec-head rv" style="max-width:64ch">
+      <span class="eyebrow on-light">Book a Party</span>
+      <h2 class="disp d2">Tell us about<br>the birthday.</h2>
+      <p class="lede" style="margin-top:20px">Dates go quickly on weekends, so the sooner we know the headcount and the date you have in mind, the better we can hold it. No deposit to enquire.</p>
+    </div>
+      <form class="form" method="POST" action="/api/birthday-party" novalidate style="margin-top:34px">
+        <div class="form-grid">
+          <div class="field">
+            <label for="bp-name">Parent / Guardian Name <span class="req" aria-hidden="true">*</span></label>
+            <input id="bp-name" name="name" type="text" autocomplete="name" placeholder="Your name" required>
+          </div>
+          <div class="field">
+            <label for="bp-email">Email Address <span class="req" aria-hidden="true">*</span></label>
+            <input id="bp-email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required>
+          </div>
+          <div class="field">
+            <label for="bp-phone">Phone Number</label>
+            <input id="bp-phone" name="phone" type="tel" autocomplete="tel" placeholder="(512) 555-0123">
+          </div>
+          <div class="field">
+            <label for="bp-age">Birthday Child&rsquo;s Age</label>
+            <input id="bp-age" name="childAge" type="text" inputmode="numeric" placeholder="8">
+          </div>
+          <div class="field">
+            <label for="bp-guests">How Many Guests?</label>
+            <input id="bp-guests" name="guests" type="text" inputmode="numeric" placeholder="14">
+          </div>
+          <div class="field">
+            <label for="bp-date">Preferred Date</label>
+            <input id="bp-date" name="preferred" type="text" placeholder="Saturday 18 Oct, afternoon">
+          </div>
+          <div class="field wide">
+            <label for="bp-activity">Main Activity</label>
+            <select id="bp-activity" name="activity">
+              <option value="">Not sure yet - help us pick</option>
+              <option>Tennis</option>
+              <option>Pickleball</option>
+              <option>Digital Sports room</option>
+              <option>Athletic challenges</option>
+              <option>A mix of everything</option>
+            </select>
+          </div>
+          <div class="field wide">
+            <label for="bp-notes">Anything Else?</label>
+            <textarea id="bp-notes" name="notes" placeholder="Allergies, siblings joining, whether you want the Cantina for the adults, questions about the packages."></textarea>
+          </div>
+        </div>
+        <!-- Honeypot: hidden from people, filled in by most bots. The handler
+             drops any submission that has it set. -->
+        <p class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+        <div class="field wide">
+          <div class="cf-turnstile" data-sitekey="" data-theme="auto"></div>
+        </div>
+        <div class="btns" style="margin-top:6px">
+          <button class="btn btn-dark" type="submit">Send the Party Enquiry</button>
+        </div>
+        <p class="form-note">Prefer to talk it through? <a class="arrow-link" href="tel:5122211926">512-221-1926</a></p>
+      </form>
+  </div>
+</section>
+
 <section class="cta-band">
   <div class="wrap">
     <h2 class="disp d2 rv">Let's book it.</h2>
     <p class="rv">Tell us the date, the age group and the headcount, and we'll take it from there.</p>
     <div class="btns rv">
-      <a class="btn btn-dark" href="mailto:contact@goracfit.com?subject=Birthday%20Party%20Inquiry">Request Info</a>
+      <a class="btn btn-dark" href="#enquiry">Request Info</a>
       <a class="btn btn-outline-dark" href="tel:5122211926">512-221-1926</a>
     </div>
   </div>
@@ -388,7 +461,7 @@
         <ul>
           <li><a href="https://maps.google.com/?q=1390+Robert+S+Light+Blvd,+Buda,+TX+78610" target="_blank" rel="noopener">1390 Robert S. Light Blvd<br>Buda, TX 78610</a></li>
           <li><a href="tel:5122211926">512-221-1926</a></li>
-          <li><a href="mailto:contact@goracfit.com">contact@goracfit.com</a></li>
+          <li><a href="contact.html#form">our contact form</a></li>
           <li><a href="tour.html">Request a Tour</a></li>
           <li style="color:rgba(255,255,255,.7);font-size:.95rem;margin-top:14px">Open daily &middot; 6:00 AM &ndash; 10:00 PM</li>
         </ul>

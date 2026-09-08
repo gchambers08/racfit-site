@@ -99,6 +99,15 @@
   }
 }
 </script>
+<!-- Cloudflare Turnstile. Loaded on every page rather than per form so the
+     widget is warm by the time a visitor reaches one. Defers, so it never
+     blocks render. -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<style>
+  /* Honeypot field: off-canvas rather than display:none, because some bots skip
+     hidden inputs but fill positioned ones. Never focusable by a person. */
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+</style>
 </head>
 <body class="no-js">
 <script>document.body.classList.remove("no-js");</script>
@@ -366,7 +375,7 @@
           <a class="btn btn-dark btn-sm" href="assets/docs/RacFit-Junior-Tennis-Pathway-Fall-2026.pdf" download>Download the PDF</a>
           <a class="btn btn-outline-dark btn-sm" href="assets/docs/RacFit-Junior-Tennis-Pathway-Fall-2026.pdf" target="_blank" rel="noopener">View in Browser</a>
         </div>
-        <p class="doc-note"><strong>Not sure which class is the right fit?</strong> Schedule a complimentary player evaluation - our staff will recommend the program that best matches your child&rsquo;s abilities and goals. <a class="arrow-link" href="mailto:michael@goracfit.com?subject=Player%20Evaluation">Email Coach Mike <span>&rarr;</span></a></p>
+        <p class="doc-note"><strong>Not sure which class is the right fit?</strong> Schedule a complimentary player evaluation - our staff will recommend the program that best matches your child&rsquo;s abilities and goals. <a class="arrow-link" href="contact.html#form">Email Coach Mike <span>&rarr;</span></a></p>
       </div>
     </div>
 
@@ -398,7 +407,7 @@
     <p class="rv">Register online, or email Coach Mike for a complimentary player evaluation first.</p>
     <div class="btns rv">
       <a class="btn btn-dark" href="https://book.goracfit.com" target="_blank" rel="noopener">Register</a>
-      <a class="btn btn-outline-dark" href="mailto:michael@goracfit.com?subject=Player%20Evaluation">Email Coach Mike</a>
+      <a class="btn btn-outline-dark" href="contact.html#form">Email Coach Mike</a>
     </div>
   </div>
 </section>
@@ -468,7 +477,7 @@
         <ul>
           <li><a href="https://maps.google.com/?q=1390+Robert+S+Light+Blvd,+Buda,+TX+78610" target="_blank" rel="noopener">1390 Robert S. Light Blvd<br>Buda, TX 78610</a></li>
           <li><a href="tel:5122211926">512-221-1926</a></li>
-          <li><a href="mailto:contact@goracfit.com">contact@goracfit.com</a></li>
+          <li><a href="contact.html#form">our contact form</a></li>
           <li><a href="tour.html">Request a Tour</a></li>
           <li style="color:rgba(255,255,255,.7);font-size:.95rem;margin-top:14px">Open daily &middot; 6:00 AM &ndash; 10:00 PM</li>
         </ul>

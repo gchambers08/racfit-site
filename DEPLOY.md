@@ -71,13 +71,20 @@ not transfer.
 
 ## Forms
 
-Each form posts to a Formspree endpoint. The IDs live in one place per form, in the
-`action` attribute:
+Seven forms, all handled by `functions/api/[form].js` - a Cloudflare Pages Function
+that verifies Turnstile and sends through SparkPost. No third-party form service.
 
-    <form method="POST" action="https://formspree.io/f/FORM_ID">
+Full detail, including the environment variables you must set, is in **FORMS.md**.
+Two things that will bite if missed:
 
-Formspree handles delivery, spam filtering and the submission archive. Nothing on
-this site holds an API key, and no visitor-facing link exposes a staff email address.
+- The Function needs `SPARKPOST_API_KEY` and `TURNSTILE_SECRET` set for **both**
+  Production and Preview, or forms 503 on preview deployments.
+- `/functions` lives at the **repo root**, not inside `dist/`. Cloudflare looks for
+  it there and nowhere else; move it into the output directory and every form 404s.
+
+After touching any form, run `python3 check-forms.py`. It compares the markup
+against the handler's field registry and fails on a mismatch - which is otherwise
+a silent failure where a renamed field just stops arriving.
 
 ## Go-live order
 

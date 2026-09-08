@@ -39,7 +39,7 @@
   RewriteRule ^feedback/?$ /contact.html#form [R=301,L,NE]
   RewriteRule ^membership-offering-feedback/?$ /contact.html#form [R=301,L,NE]
   RewriteRule ^pickleball-survey/?$ /contact.html#form [R=301,L,NE]   # confirm
-  RewriteRule ^thank-you/?$ /index.html [R=301,L,NE]   # confirm
+  RewriteRule ^thank-you/?$ /thank-you.html [R=301,L,NE]
   RewriteRule ^programs/?$ /index.html#programs [R=301,L,NE]   # confirm
   RewriteRule ^priority-access/?$ /membership.html [R=301,L,NE]   # confirm
   RewriteRule ^heros-rate/?$ /membership.html [R=301,L,NE]   # confirm

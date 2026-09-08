@@ -36,6 +36,9 @@ DIST = P('dist')
 # together; all three have to agree.
 HOST = 'https://goracfit.com'
 
+# Set as a build environment variable in the Cloudflare Pages dashboard.
+TURNSTILE_SITEKEY = os.environ.get('TURNSTILE_SITEKEY', '')
+
 # Copied into dist as-is. _redirects is consumed by Cloudflare Pages at the
 # site root, not served.
 DIST_FILES = ['favicon.ico', 'robots.txt', 'sitemap.xml', '404.html']
@@ -85,10 +88,15 @@ def main():
         body = re.sub(r'<!--(TITLE|DESC|OG):.*?-->\s*', '', body, flags=re.S)
 
         def assemble(slug):
-            return (head.replace('{{TITLE}}', title).replace('{{DESC}}', desc)
+            page = (head.replace('{{TITLE}}', title).replace('{{DESC}}', desc)
                         .replace('{{HOST}}', HOST).replace('{{SLUG}}', slug)
                         .replace('{{OG}}', og)
                     + header + body + footer)
+            # Turnstile's site key is public, so it is safe in the HTML - but it
+            # is per-environment, so it comes from the build env rather than the
+            # repo. Unset locally means no widget, which is what you want for a
+            # file:// preview.
+            return page.replace('{{TURNSTILE_SITEKEY}}', TURNSTILE_SITEKEY)
 
         # local preview copy
         open(P(name + '.html'), 'w').write(

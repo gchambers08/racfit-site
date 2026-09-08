@@ -93,50 +93,9 @@
     start();
   });
 
-  /* Enquiry forms.
-     No backend on a static site, so a submit composes an email in the visitor's
-     mail client with every field they filled in, labelled. To switch a form to a
-     real form service, give it a real `action` + `method` and drop `data-mail-form`. */
-  document.querySelectorAll('[data-mail-form]').forEach(function (form) {
-    var to = form.getAttribute('data-mail-to') || 'contact@goracfit.com';
-    var subject = form.getAttribute('data-mail-subject') || 'Website enquiry';
-    var status = form.querySelector('[data-form-status]');
-
-    function labelFor(el) {
-      var l = el.id && form.querySelector('label[for="' + el.id + '"]');
-      var text = l ? l.textContent : (el.name || '');
-      return text.replace(/\s*\*\s*$/, '').trim();
-    }
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var fields = [].filter.call(form.elements, function (el) {
-        return el.name && el.type !== 'submit' && el.type !== 'button';
-      });
-
-      var firstBad = null;
-      fields.forEach(function (el) {
-        if (!firstBad && !el.checkValidity()) firstBad = el;
-      });
-      if (firstBad) {
-        if (status) status.textContent = 'Please check the ' + labelFor(firstBad).toLowerCase() + ' field.';
-        firstBad.focus();
-        return;
-      }
-
-      var lines = [];
-      fields.forEach(function (el) {
-        if (el.type === 'radio' && !el.checked) return;
-        if (!String(el.value).trim()) return;
-        lines.push(labelFor(el) + ': ' + el.value.trim());
-      });
-
-      if (status) status.textContent = 'Opening your email app with the details filled in - just hit send.';
-      window.location.href = 'mailto:' + to
-        + '?subject=' + encodeURIComponent(subject)
-        + '&body=' + encodeURIComponent(lines.join('\n\n'));
-    });
-  });
+  /* Forms POST to /api/<form>, a Cloudflare Pages Function, and the browser
+     follows its 303 to the thank-you page. No JavaScript is involved, so a
+     visitor with scripts blocked can still send one. */
 
 
   /* ---------- Staff bios in a dialog ----------
@@ -205,6 +164,18 @@
       if (opener) { opener.focus(); opener = null; }
     });
   }
+
+  /* Careers: the two role pages link in as careers.html?role=<name>#apply, so
+     preselect that option. Falls back to an empty select with no JS. */
+  (function () {
+    var sel = document.getElementById('ap-role');
+    if (!sel) return;
+    var want = new URLSearchParams(location.search).get('role');
+    if (!want) return;
+    for (var i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].value === want) { sel.selectedIndex = i; return; }
+    }
+  })();
 
   /* Marquee: duplicate track content so the loop is seamless */
   document.querySelectorAll('.marquee-track, .gal-track').forEach(function (track) {

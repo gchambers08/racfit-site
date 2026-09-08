@@ -99,6 +99,15 @@
   }
 }
 </script>
+<!-- Cloudflare Turnstile. Loaded on every page rather than per form so the
+     widget is warm by the time a visitor reaches one. Defers, so it never
+     blocks render. -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<style>
+  /* Honeypot field: off-canvas rather than display:none, because some bots skip
+     hidden inputs but fill positioned ones. Never focusable by a person. */
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+</style>
 </head>
 <body class="no-js">
 <script>document.body.classList.remove("no-js");</script>
@@ -387,7 +396,7 @@
       <p class="lede" style="margin-top:20px">Tell us which camps you are interested in and we will email you as soon as dates and registration open - before spots go public. No obligation, and we will not pass your details on.</p>
     </div>
 
-    <form class="form rv" method="post" action="#" data-mail-form data-mail-to="contact@goracfit.com" data-mail-subject="Camp interest" novalidate style="margin-top:34px">
+    <form class="form rv" method="POST" action="/api/camp-interest" novalidate style="margin-top:34px">
       <div class="form-grid">
         <div class="field">
           <label for="ci-name">Parent / Guardian Name <span class="req" aria-hidden="true">*</span></label>
@@ -428,6 +437,12 @@
           <textarea id="ci-notes" name="notes" placeholder="Weeks you have in mind, questions about extended care, anything we should know."></textarea>
         </div>
       </div>
+          <!-- Honeypot: hidden from people, filled in by most bots. The handler
+               drops any submission that has it set. -->
+          <p class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+          <div class="field wide">
+            <div class="cf-turnstile" data-sitekey="" data-theme="auto"></div>
+          </div>
       <div class="btns" style="margin-top:6px">
         <button class="btn btn-dark" type="submit">Add Me to the List</button>
       </div>
@@ -512,7 +527,7 @@
         <ul>
           <li><a href="https://maps.google.com/?q=1390+Robert+S+Light+Blvd,+Buda,+TX+78610" target="_blank" rel="noopener">1390 Robert S. Light Blvd<br>Buda, TX 78610</a></li>
           <li><a href="tel:5122211926">512-221-1926</a></li>
-          <li><a href="mailto:contact@goracfit.com">contact@goracfit.com</a></li>
+          <li><a href="contact.html#form">our contact form</a></li>
           <li><a href="tour.html">Request a Tour</a></li>
           <li style="color:rgba(255,255,255,.7);font-size:.95rem;margin-top:14px">Open daily &middot; 6:00 AM &ndash; 10:00 PM</li>
         </ul>
