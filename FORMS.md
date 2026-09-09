@@ -57,11 +57,29 @@ deliberate — an unprotected public mail endpoint gets abused within days.
 
 ## SparkPost setup
 
-1. Verify a sending domain. Use a subdomain — `mail.goracfit.com` — so anything
-   sent programmatically cannot damage the apex's reputation.
-2. Add the DKIM and SPF records SparkPost gives you. DNS is on Cloudflare, so this
-   is two records in the dashboard.
-3. `SITE.from` in the handler must be an address on that verified domain.
+Sending address is `contact@goracfit.com`, so the domain to verify in SparkPost is
+the **apex** — the same domain staff mail runs on. That works, but two records need
+care:
+
+1. **DKIM.** Add the CNAME or TXT selector SparkPost gives you. Multiple DKIM
+   selectors coexist happily, so this cannot disturb existing mail.
+2. **SPF.** There must be exactly **one** SPF TXT record on a domain. Do not add a
+   second one — add SparkPost's `include:` to the record already there:
+
+       v=spf1 include:_spf.google.com include:sparkpostmail.com ~all
+
+   Two SPF records is a permanent error state and breaks *all* mail from the
+   domain, including staff email. SPF also has a hard limit of 10 DNS lookups;
+   check the total if the record already has several includes.
+3. Send a test through each form and confirm it lands in the inbox, not spam,
+   before launch. DKIM alignment is what keeps it out of spam once DMARC is on.
+
+**Note on from == to.** Five of the seven forms deliver to `contact@goracfit.com`,
+which is now also the sending address, so those messages are from and to the same
+mailbox. Delivery is fine and `reply_to` still points at the visitor, but
+self-addressed mail threads awkwardly in Gmail and some filters view it with
+suspicion. A dedicated `website@goracfit.com` as the sender would avoid both — it
+is a one-line change to `SITE.from`.
 
 SparkPost is now part of Bird. The free developer tier is around 500 emails/month,
 which covers a club's form volume; past that, pricing is "contact sales" with

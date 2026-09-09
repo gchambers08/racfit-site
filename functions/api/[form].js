@@ -34,9 +34,10 @@
 const SITE = {
   name: 'RacFit',
   origin: 'https://goracfit.com',
-  // Must be on a domain verified in SparkPost. A subdomain keeps the apex's
-  // reputation separate from anything sent programmatically.
-  from: { email: 'website@mail.goracfit.com', name: 'RacFit Website' },
+  // Must be on a domain verified in SparkPost. This is the apex, so SparkPost's
+  // DKIM and SPF go on goracfit.com itself - the same domain staff mail runs on.
+  // See FORMS.md before touching the SPF record.
+  from: { email: 'contact@goracfit.com', name: 'RacFit Website' },
   thankYou: '/thank-you',
   phone: '512-221-1926',
 };
