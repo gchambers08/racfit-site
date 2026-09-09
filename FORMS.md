@@ -46,10 +46,14 @@ break on preview deployments.
 |---|---|---|
 | `SPARKPOST_API_KEY` | secret | Needs only the **Transmissions: Read/Write** grant. Nothing else. |
 | `TURNSTILE_SECRET` | secret | From the Turnstile widget. |
-| `TURNSTILE_SITEKEY` | build var | Public. Substituted into the HTML at build time by `build.py`. |
+| `TURNSTILE_SITEKEY` | *not needed* | The site key is public and is committed as the default in `build.py`, so a local build matches production. Set this only to point a second site or a test widget at a different key. |
 | `SPARKPOST_BASE` | optional | `https://api.eu.sparkpost.com` for an EU account. |
 | `SUBMISSIONS` | optional | KV namespace **binding**. Bind it and every submission is archived; leave it unbound and that step is skipped silently. |
 | `ALLOW_UNVERIFIED` | testing only | `"true"` lets forms work before the Turnstile widget exists. **Never set in production.** |
+
+The site key (`0x4AAA…`) and the secret key are not interchangeable. The site key
+belongs in the HTML and is committed. The secret key must only ever exist as an
+encrypted Pages variable — if it appears in the repo, rotate the widget.
 
 Turnstile verification **fails closed**: with no `TURNSTILE_SECRET` and no
 `ALLOW_UNVERIFIED`, forms return 503 rather than accepting unverified mail. That is

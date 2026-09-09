@@ -78,7 +78,8 @@ Full detail, including the environment variables you must set, is in **FORMS.md*
 Two things that will bite if missed:
 
 - The Function needs `SPARKPOST_API_KEY` and `TURNSTILE_SECRET` set for **both**
-  Production and Preview, or forms 503 on preview deployments.
+  Production and Preview, or forms 503 on preview deployments. Those two are the
+  only variables you must set — the Turnstile *site* key is public and committed.
 - `/functions` lives at the **repo root**, not inside `dist/`. Cloudflare looks for
   it there and nowhere else; move it into the output directory and every form 404s.
 

@@ -36,8 +36,16 @@ DIST = P('dist')
 # together; all three have to agree.
 HOST = 'https://goracfit.com'
 
-# Set as a build environment variable in the Cloudflare Pages dashboard.
-TURNSTILE_SITEKEY = os.environ.get('TURNSTILE_SITEKEY', '')
+# Turnstile's SITE key. Committed on purpose: it is not a secret. It ships in the
+# page source of every form by design, and Turnstile enforces which hostnames may
+# use it. The matching SECRET key is what must never be in the repo - that lives
+# only as an encrypted Pages environment variable, TURNSTILE_SECRET.
+#
+# Committing it rather than reading it from the build environment means a local
+# build produces the same HTML as Cloudflare's, so a form tested locally is the
+# form that ships. The env var still wins, for a second site or a test widget.
+TURNSTILE_SITEKEY = os.environ.get(
+    'TURNSTILE_SITEKEY', '0x4AAAAAAEuQSp9DKqOTBzUg')
 
 # Copied into dist as-is. _redirects is consumed by Cloudflare Pages at the
 # site root, not served.
