@@ -1,0 +1,14 @@
+{
+  "name": "racfit-site",
+  "private": true,
+  "description": "goracfit.com - static site on Cloudflare Workers with static assets",
+  "scripts": {
+    "build": "python3 build.py && wrangler pages functions build --outdir=./dist/worker/",
+    "check": "python3 check-forms.py",
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^4.131.0"
+  }
+}

@@ -1,7 +1,11 @@
 # Forms
 
-Static site, no backend, no third-party form service. A Cloudflare Pages Function
-takes the POST, verifies a Turnstile token, and sends the email through SparkPost.
+Static site, no backend, no third-party form service. A Cloudflare Worker takes the
+POST, verifies a Turnstile token, and sends the email through SparkPost.
+
+The handler source stays in the Pages Functions layout (`functions/api/[form].js`)
+because it is far more readable that way; the build compiles it into a single
+Worker script with `wrangler pages functions build`.
 
     browser  ──POST /api/<form>──>  functions/api/[form].js
                                       │
@@ -38,9 +42,8 @@ can inject extra content into the email by adding inputs with a browser console.
 
 ## Environment variables
 
-Set in the Cloudflare Pages dashboard, Settings → Environment variables. Mark the
-two secrets as **encrypted**. Set them for Production *and* Preview, or forms
-break on preview deployments.
+Set on the Worker: **Settings → Variables and Secrets**. Add the two credentials as
+**Secrets**, not plaintext variables.
 
 | Name | Type | Notes |
 |---|---|---|
@@ -48,7 +51,7 @@ break on preview deployments.
 | `TURNSTILE_SECRET` | secret | From the Turnstile widget. |
 | `TURNSTILE_SITEKEY` | *not needed* | The site key is public and is committed as the default in `build.py`, so a local build matches production. Set this only to point a second site or a test widget at a different key. |
 | `SPARKPOST_BASE` | optional | `https://api.eu.sparkpost.com` for an EU account. |
-| `SUBMISSIONS` | optional | KV namespace **binding**. Bind it and every submission is archived; leave it unbound and that step is skipped silently. |
+| `SUBMISSIONS` | optional | KV namespace **binding** in `wrangler.jsonc`. Bind it and every submission is archived; leave it unbound and that step is skipped silently. |
 | `ALLOW_UNVERIFIED` | testing only | `"true"` lets forms work before the Turnstile widget exists. **Never set in production.** |
 
 The site key (`0x4AAA…`) and the secret key are not interchangeable. The site key
@@ -95,8 +98,10 @@ identical payload — so this is not a lock-in decision.
 
 The handler is one file with no imports, on purpose.
 
-1. Copy `functions/api/[form].js` into the new project.
+1. Copy `functions/api/[form].js` and `wrangler.jsonc` into the new project.
 2. Rewrite the `CONFIG` block at the top: `SITE` and the `FORMS` registry.
+   In `wrangler.jsonc`, change `name` and keep `run_worker_first: ["/api/*"]` —
+   without it the asset layer answers the form POSTs with the 404 page.
 3. Point each form's `action` at `/api/<key>`, and give every form a honeypot
    (`name="_gotcha"`, `.hp` class) and a `.cf-turnstile` div.
 4. Set the same environment variables.

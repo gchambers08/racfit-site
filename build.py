@@ -7,16 +7,20 @@ Builds the site twice, from one source, into two forms:
                   Double-click any of these in Finder and the site works
                   offline, exactly as it always has.
 
-  dist/           extensionless internal links and canonicals, plus assets,
+  dist/client/    extensionless internal links and canonicals, plus assets,
                   robots.txt, sitemap.xml, 404.html and _redirects.
-                  THIS is what Cloudflare Pages publishes.
+                  This is the static asset directory Cloudflare serves.
 
-Why two. Cloudflare Pages strips .html and 308-redirects /about.html to
-/about, and that is not configurable. So on Pages, .html cannot be the
-canonical form - every internal .html link would cost a redirect hop on
-every click, and the canonical tags would point at URLs that redirect.
-dist/ is therefore extensionless throughout. Generating it rather than
-converting the source keeps local preview working the way Grant reviews.
+  dist/worker/    NOT written here - the Cloudflare build step compiles
+                  functions/ into it with `wrangler pages functions build`.
+
+Why two. Cloudflare serves /about from about.html and 307-redirects
+/about.html to /about (html_handling: auto-trailing-slash, the default).
+That is not configurable to preserve .html, so .html cannot be the canonical
+form - every internal .html link would cost a redirect hop on every click,
+and the canonical tags would point at URLs that redirect. dist/client/ is
+therefore extensionless throughout. Generating it rather than converting the
+source keeps local preview working the way Grant reviews.
 
 Each body file starts with:
   <!--TITLE: ... -->
@@ -29,7 +33,7 @@ import os, re, glob, shutil
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 P = lambda *a: os.path.join(ROOT, *a)
-DIST = P('dist')
+DIST = P('dist', 'client')
 
 # Canonical host. Apex, not www - the redirect config sends www here.
 # Change this, the host rule in redirects/redirect-map.csv and sitemap.xml
@@ -126,12 +130,12 @@ def main():
 
     files = sum(len(f) for _b, _d, f in os.walk(DIST))
     print('%d pages -> site root (.html links, for local preview)' % built)
-    print('%d pages -> dist/ (extensionless, %d files total, for Cloudflare Pages)'
+    print('%d pages -> dist/client/ (extensionless, %d files total, served by Cloudflare)'
           % (built, files))
     leaked = [n for n in NEVER_PUBLISH if os.path.exists(os.path.join(DIST, n))]
     if leaked:
-        raise SystemExit('source leaked into dist/: %s' % leaked)
-    print('dist/ carries no source or tooling')
+        raise SystemExit('source leaked into dist/client/: %s' % leaked)
+    print('dist/client/ carries no source or tooling')
 
 
 if __name__ == '__main__':

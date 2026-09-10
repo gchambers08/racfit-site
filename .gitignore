@@ -1,6 +1,9 @@
-# Build output. Cloudflare Pages runs build.py on every push and publishes
-# dist/, so committing it would just be a second copy that can go stale.
+# Build output. Cloudflare runs the build on every push and deploys what it
+# produces, so committing either of these would just be a second copy that can
+# go stale. dist/client is the static site; dist/worker is the compiled form
+# handler.
 dist/
+node_modules/
 
 # Packaged copies - the repo is the source of truth now.
 *.zip

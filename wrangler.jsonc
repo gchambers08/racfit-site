@@ -1,0 +1,49 @@
+{
+  // Cloudflare Worker with static assets. Cloudflare retired new Pages projects,
+  // so this is the Workers equivalent of what used to be a Pages project: the
+  // 26 static pages are served from dist/client, and the form handler that used
+  // to be a Pages Function is compiled into dist/worker.
+  //
+  // Build:   python3 build.py && npx wrangler pages functions build --outdir=./dist/worker/
+  // Deploy:  npx wrangler deploy
+  //
+  // Neither dist/ nor node_modules is committed - Cloudflare builds both from
+  // source on every push.
+
+  "name": "racfit-site",
+  "compatibility_date": "2026-09-10",
+
+  // The compiled form handler. `wrangler pages functions build` turns
+  // functions/api/[form].js into this single script, routing included, so the
+  // handler source stays in the Pages Functions layout and needs no rewrite.
+  "main": "./dist/worker/index.js",
+
+  "assets": {
+    "directory": "./dist/client/",
+
+    // Serve /404.html for any path that matches no asset. Without this the
+    // default falls back to index.html, which would return 200 for every typo
+    // and let search engines index unlimited soft-404s.
+    "not_found_handling": "404-page",
+
+    "binding": "ASSETS",
+
+    // REQUIRED, and the reason is not obvious. With the default
+    // (run_worker_first: false) the asset layer handles a request that matches
+    // no asset by applying not_found_handling - it does NOT fall through to the
+    // Worker. A POST to /api/contact would therefore be answered with the 404
+    // page and every form would fail silently.
+    //
+    // Scoping it to /api/* sends only the form endpoints to the Worker and
+    // leaves all 166 static files served straight from the edge, which
+    // run_worker_first: true would not do.
+    "run_worker_first": ["/api/*"]
+  },
+
+  "observability": {
+    // Keeps the Worker's console.error output visible in the dashboard, which is
+    // where a SparkPost rejection or a Turnstile failure shows up. The handler
+    // logs status codes only - never a key, never a visitor's details.
+    "enabled": true
+  }
+}
