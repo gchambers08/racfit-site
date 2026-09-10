@@ -16,7 +16,7 @@
   RewriteRule ^tennis-programs/?$ /tennis.html [R=301,L,NE]
   RewriteRule ^homeschool-tennis/?$ /junior-tennis.html#levels [R=301,L,NE]
   RewriteRule ^adult-pickleball/?$ /pickleball.html [R=301,L,NE]
-  RewriteRule ^junior-pickleball/?$ /pickleball.html [R=301,L,NE]   # confirm
+  RewriteRule ^junior-pickleball/?$ /pickleball.html [R=301,L,NE]
   RewriteRule ^pickleball-at-racfit/?$ /pickleball.html [R=301,L,NE]
   RewriteRule ^fitness-programs/?$ /fitness.html [R=301,L,NE]
   RewriteRule ^membership/?$ /membership.html [R=301,L,NE]
@@ -38,28 +38,28 @@
   RewriteRule ^cancellation-policy/?$ /cancellation-policy.html [R=301,L,NE]
   RewriteRule ^feedback/?$ /contact.html#form [R=301,L,NE]
   RewriteRule ^membership-offering-feedback/?$ /contact.html#form [R=301,L,NE]
-  RewriteRule ^pickleball-survey/?$ /contact.html#form [R=301,L,NE]   # confirm
+  RewriteRule ^pickleball-survey/?$ /contact.html#form [R=301,L,NE]
   RewriteRule ^thank-you/?$ /thank-you.html [R=301,L,NE]
-  RewriteRule ^programs/?$ /index.html#programs [R=301,L,NE]   # confirm
-  RewriteRule ^priority-access/?$ /membership.html [R=301,L,NE]   # confirm
-  RewriteRule ^heros-rate/?$ /membership.html [R=301,L,NE]   # confirm
-  RewriteRule ^membership-individual-heroes-rate/?$ /membership.html#individual [R=301,L,NE]   # confirm
-  RewriteRule ^membership-couples-heroes-rate/?$ /membership.html#couples [R=301,L,NE]   # confirm
-  RewriteRule ^membership-family-heroes-rate/?$ /membership.html#family [R=301,L,NE]   # confirm
-  RewriteRule ^harvestmeadows/?$ /corporate-memberships.html [R=301,L,NE]   # confirm
-  RewriteRule ^the-aidan/?$ /corporate-memberships.html [R=301,L,NE]   # confirm
-  RewriteRule ^the-strand/?$ /corporate-memberships.html [R=301,L,NE]   # confirm
-  RewriteRule ^thebradford/?$ /corporate-memberships.html [R=301,L,NE]   # confirm
-  RewriteRule ^the-learning-experience-buda/?$ /corporate-memberships.html [R=301,L,NE]   # confirm
-  RewriteRule ^santa-cruz-catholic-school/?$ /corporate-memberships.html [R=301,L,NE]   # confirm
-  RewriteRule ^valor-education-south-austin/?$ /corporate-memberships.html [R=301,L,NE]   # confirm
-  RewriteRule ^valor-education-kyle/?$ /corporate-memberships.html [R=301,L,NE]   # confirm
+  RewriteRule ^programs/?$ /index.html#programs [R=301,L,NE]
+  RewriteRule ^priority-access/?$ /membership.html [R=301,L,NE]
+  RewriteRule ^heros-rate/?$ /membership.html [R=301,L,NE]
+  RewriteRule ^membership-individual-heroes-rate/?$ /membership.html#individual [R=301,L,NE]
+  RewriteRule ^membership-couples-heroes-rate/?$ /membership.html#couples [R=301,L,NE]
+  RewriteRule ^membership-family-heroes-rate/?$ /membership.html#family [R=301,L,NE]
+  RewriteRule ^harvestmeadows/?$ /corporate-memberships.html [R=301,L,NE]
+  RewriteRule ^the-aidan/?$ /corporate-memberships.html [R=301,L,NE]
+  RewriteRule ^the-strand/?$ /corporate-memberships.html [R=301,L,NE]
+  RewriteRule ^thebradford/?$ /corporate-memberships.html [R=301,L,NE]
+  RewriteRule ^the-learning-experience-buda/?$ /corporate-memberships.html [R=301,L,NE]
+  RewriteRule ^santa-cruz-catholic-school/?$ /corporate-memberships.html [R=301,L,NE]
+  RewriteRule ^valor-education-south-austin/?$ /corporate-memberships.html [R=301,L,NE]
+  RewriteRule ^valor-education-kyle/?$ /corporate-memberships.html [R=301,L,NE]
   RewriteRule ^careers/?$ /careers.html [R=301,L,NE]
   RewriteRule ^fitness/?$ /fitness.html [R=301,L,NE]
   RewriteRule ^pickleball/?$ /pickleball.html [R=301,L,NE]
   RewriteRule ^tennis/?$ /tennis.html [R=301,L,NE]
-  RewriteRule ^news-resources/?$ /index.html [R=301,L,NE]   # confirm
-  RewriteRule ^all-posts/?$ /index.html [R=301,L,NE]   # confirm
+  RewriteRule ^news-resources/?$ /index.html [R=301,L,NE]
+  RewriteRule ^all-posts/?$ /index.html [R=301,L,NE]
   RewriteRule ^michelle-stallard-named-general-manager-of-racfit/?$ /about.html#team [R=301,L,NE]
   RewriteRule ^michael-macvay-named-director-of-youth-tennis-managing-member-at-racfit/?$ /about.html#team [R=301,L,NE]
   RewriteRule ^jake-rother-named-head-tennis-professional-and-high-performance-director-at-racfit/?$ /about.html#team [R=301,L,NE]
@@ -67,30 +67,40 @@
   RewriteRule ^abigail-george-named-youth-program-director-at-racfit/?$ /about.html#team [R=301,L,NE]
   RewriteRule ^director-of-pickleball/?$ /careers-director-of-pickleball.html [R=301,L,NE]
   RewriteRule ^customer-experience-representative/?$ /careers-customer-experience-associate.html [R=301,L,NE]
-  RewriteRule ^your-full-fall-schedule-tennis-pickleball-fitness-registration-now-available/?$ /index.html#programs [R=301,L,NE]   # confirm
-  RewriteRule ^parents-night-out/?$ /juniors.html [R=301,L,NE]   # confirm
-  RewriteRule ^1st-annual-ach-memorial-whites-woodies-one-day-classic-july-3-2026-at-racfit/?$ /socials.html [R=301,L,NE]   # confirm
+  RewriteRule ^your-full-fall-schedule-tennis-pickleball-fitness-registration-now-available/?$ /index.html#programs [R=301,L,NE]
+  RewriteRule ^parents-night-out/?$ /juniors.html [R=301,L,NE]
+  RewriteRule ^1st-annual-ach-memorial-whites-woodies-one-day-classic-july-3-2026-at-racfit/?$ /socials.html [R=301,L,NE]
   RewriteRule ^les-mills-triple-threat-launch-comes-to-racfit-a-full-day-of-fitness-wellness-community/?$ /fitness.html#lesmills [R=301,L,NE]
   RewriteRule ^racfit-community-art-series-presents-julie-pelaez-studios/?$ /socials.html [R=301,L,NE]
-  RewriteRule ^grand-opening-may-31st-sunday-funday/?$ /socials.html [R=301,L,NE]   # confirm
+  RewriteRule ^grand-opening-may-31st-sunday-funday/?$ /socials.html [R=301,L,NE]
   RewriteRule ^moneyball-mixed-doubles-pickleball-tournament/?$ /pickleball.html#programs [R=301,L,NE]
-  RewriteRule ^founders-members-week/?$ /membership.html [R=301,L,NE]   # confirm
-  RewriteRule ^taste-of-summer-camps-free/?$ /juniors.html#camps [R=301,L,NE]   # confirm
+  RewriteRule ^founders-members-week/?$ /membership.html [R=301,L,NE]
+  RewriteRule ^taste-of-summer-camps-free/?$ /juniors.html#camps [R=301,L,NE]
   RewriteRule ^summer-camp-more-than-fun-for-kids/?$ /juniors.html#camps [R=301,L,NE]
   RewriteRule ^the-camps-portfolio/?$ /juniors.html#camps [R=301,L,NE]
   RewriteRule ^fun-activities-at-our-camp/?$ /juniors.html#camps [R=301,L,NE]
 
   # --- WordPress platform paths (not in the sitemap, still requested) ---
-  RewriteRule ^feed/?$ / [R=301,L]   # main feed
-  RewriteRule ^(.+)/feed/?$ /$1 [R=301,L]   # comment + per-page feeds
-  RewriteRule ^category/(.*)$ / [R=301,L]   # category archives
-  RewriteRule ^tag/(.*)$ / [R=301,L]   # tag archives
-  RewriteRule ^author/(.*)$ /about.html#team [R=301,L,NE]   # author archives
-  RewriteRule ^[0-9]{4}(/[0-9]{2})*/?$ / [R=301,L]   # date archives
-  RewriteRule ^wp-admin(/.*)?$ / [R=301,L]   # admin + login
-  RewriteRule ^wp-login\.php$ / [R=301,L]   # login
-  RewriteRule ^wp-json(/.*)?$ / [R=301,L]   # json api
-  RewriteRule ^xmlrpc\.php$ / [R=301,L]   # xmlrpc
+  # main feed
+  RewriteRule ^feed/?$ / [R=301,L]
+  # comment + per-page feeds
+  RewriteRule ^(.+)/feed/?$ /$1 [R=301,L]
+  # category archives
+  RewriteRule ^category/(.*)$ / [R=301,L]
+  # tag archives
+  RewriteRule ^tag/(.*)$ / [R=301,L]
+  # author archives
+  RewriteRule ^author/(.*)$ /about.html#team [R=301,L,NE]
+  # date archives
+  RewriteRule ^[0-9]{4}(/[0-9]{2})*/?$ / [R=301,L]
+  # admin + login
+  RewriteRule ^wp-admin(/.*)?$ / [R=301,L]
+  # login
+  RewriteRule ^wp-login\.php$ / [R=301,L]
+  # json api
+  RewriteRule ^wp-json(/.*)?$ / [R=301,L]
+  # xmlrpc
+  RewriteRule ^xmlrpc\.php$ / [R=301,L]
 
   # WordPress ugly permalinks: /?p=123 and /?page_id=12
   RewriteCond %{QUERY_STRING} ^(p|page_id)=[0-9]+$

@@ -10,7 +10,7 @@
 /tennis-programs/                                                                           /tennis.html                                  301
 /homeschool-tennis/                                                                         /junior-tennis.html#levels                    301
 /adult-pickleball/                                                                          /pickleball.html                              301
-/junior-pickleball/                                                                         /pickleball.html                              301   # confirm
+/junior-pickleball/                                                                         /pickleball.html                              301
 /pickleball-at-racfit/                                                                      /pickleball.html                              301
 /fitness-programs/                                                                          /fitness.html                                 301
 /membership/                                                                                /membership.html                              301
@@ -32,28 +32,28 @@
 /cancellation-policy/                                                                       /cancellation-policy.html                     301
 /feedback/                                                                                  /contact.html#form                            301
 /membership-offering-feedback/                                                              /contact.html#form                            301
-/pickleball-survey/                                                                         /contact.html#form                            301   # confirm
+/pickleball-survey/                                                                         /contact.html#form                            301
 /thank-you/                                                                                 /thank-you.html                               301
-/programs/                                                                                  /index.html#programs                          301   # confirm
-/priority-access/                                                                           /membership.html                              301   # confirm
-/heros-rate/                                                                                /membership.html                              301   # confirm
-/membership-individual-heroes-rate/                                                         /membership.html#individual                   301   # confirm
-/membership-couples-heroes-rate/                                                            /membership.html#couples                      301   # confirm
-/membership-family-heroes-rate/                                                             /membership.html#family                       301   # confirm
-/harvestmeadows/                                                                            /corporate-memberships.html                   301   # confirm
-/the-aidan/                                                                                 /corporate-memberships.html                   301   # confirm
-/the-strand/                                                                                /corporate-memberships.html                   301   # confirm
-/thebradford/                                                                               /corporate-memberships.html                   301   # confirm
-/the-learning-experience-buda/                                                              /corporate-memberships.html                   301   # confirm
-/santa-cruz-catholic-school/                                                                /corporate-memberships.html                   301   # confirm
-/valor-education-south-austin/                                                              /corporate-memberships.html                   301   # confirm
-/valor-education-kyle/                                                                      /corporate-memberships.html                   301   # confirm
+/programs/                                                                                  /index.html#programs                          301
+/priority-access/                                                                           /membership.html                              301
+/heros-rate/                                                                                /membership.html                              301
+/membership-individual-heroes-rate/                                                         /membership.html#individual                   301
+/membership-couples-heroes-rate/                                                            /membership.html#couples                      301
+/membership-family-heroes-rate/                                                             /membership.html#family                       301
+/harvestmeadows/                                                                            /corporate-memberships.html                   301
+/the-aidan/                                                                                 /corporate-memberships.html                   301
+/the-strand/                                                                                /corporate-memberships.html                   301
+/thebradford/                                                                               /corporate-memberships.html                   301
+/the-learning-experience-buda/                                                              /corporate-memberships.html                   301
+/santa-cruz-catholic-school/                                                                /corporate-memberships.html                   301
+/valor-education-south-austin/                                                              /corporate-memberships.html                   301
+/valor-education-kyle/                                                                      /corporate-memberships.html                   301
 /careers/                                                                                   /careers.html                                 301
 /fitness/                                                                                   /fitness.html                                 301
 /pickleball/                                                                                /pickleball.html                              301
 /tennis/                                                                                    /tennis.html                                  301
-/news-resources/                                                                            /index.html                                   301   # confirm
-/all-posts/                                                                                 /index.html                                   301   # confirm
+/news-resources/                                                                            /index.html                                   301
+/all-posts/                                                                                 /index.html                                   301
 /michelle-stallard-named-general-manager-of-racfit/                                         /about.html#team                              301
 /michael-macvay-named-director-of-youth-tennis-managing-member-at-racfit/                   /about.html#team                              301
 /jake-rother-named-head-tennis-professional-and-high-performance-director-at-racfit/        /about.html#team                              301
@@ -61,27 +61,37 @@
 /abigail-george-named-youth-program-director-at-racfit/                                     /about.html#team                              301
 /director-of-pickleball/                                                                    /careers-director-of-pickleball.html          301
 /customer-experience-representative/                                                        /careers-customer-experience-associate.html   301
-/your-full-fall-schedule-tennis-pickleball-fitness-registration-now-available/              /index.html#programs                          301   # confirm
-/parents-night-out/                                                                         /juniors.html                                 301   # confirm
-/1st-annual-ach-memorial-whites-woodies-one-day-classic-july-3-2026-at-racfit/              /socials.html                                 301   # confirm
+/your-full-fall-schedule-tennis-pickleball-fitness-registration-now-available/              /index.html#programs                          301
+/parents-night-out/                                                                         /juniors.html                                 301
+/1st-annual-ach-memorial-whites-woodies-one-day-classic-july-3-2026-at-racfit/              /socials.html                                 301
 /les-mills-triple-threat-launch-comes-to-racfit-a-full-day-of-fitness-wellness-community/   /fitness.html#lesmills                        301
 /racfit-community-art-series-presents-julie-pelaez-studios/                                 /socials.html                                 301
-/grand-opening-may-31st-sunday-funday/                                                      /socials.html                                 301   # confirm
+/grand-opening-may-31st-sunday-funday/                                                      /socials.html                                 301
 /moneyball-mixed-doubles-pickleball-tournament/                                             /pickleball.html#programs                     301
-/founders-members-week/                                                                     /membership.html                              301   # confirm
-/taste-of-summer-camps-free/                                                                /juniors.html#camps                           301   # confirm
+/founders-members-week/                                                                     /membership.html                              301
+/taste-of-summer-camps-free/                                                                /juniors.html#camps                           301
 /summer-camp-more-than-fun-for-kids/                                                        /juniors.html#camps                           301
 /the-camps-portfolio/                                                                       /juniors.html#camps                           301
 /fun-activities-at-our-camp/                                                                /juniors.html#camps                           301
 
 # --- WordPress platform paths (not in the sitemap, still requested) ---
-/feed/*                                                                                     /                                             301   # main feed
-/*/feed/*                                                                                   /                                             301   # comment + per-page feeds
-/category/*                                                                                 /                                             301   # category archives
-/tag/*                                                                                      /                                             301   # tag archives
-/author/*                                                                                   /about.html#team                              301   # author archives
-/20*/*                                                                                      /                                             301   # date archives
-/wp-admin/*                                                                                 /                                             301   # admin + login
-/wp-login.php                                                                               /                                             301   # login
-/wp-json/*                                                                                  /                                             301   # json api
-/xmlrpc.php                                                                                 /                                             301   # xmlrpc
+# main feed
+/feed/*                                                                                     /                                             301
+# comment + per-page feeds
+/*/feed/*                                                                                   /                                             301
+# category archives
+/category/*                                                                                 /                                             301
+# tag archives
+/tag/*                                                                                      /                                             301
+# author archives
+/author/*                                                                                   /about.html#team                              301
+# date archives
+/20*/*                                                                                      /                                             301
+# admin + login
+/wp-admin/*                                                                                 /                                             301
+# login
+/wp-login.php                                                                               /                                             301
+# json api
+/wp-json/*                                                                                  /                                             301
+# xmlrpc
+/xmlrpc.php                                                                                 /                                             301
