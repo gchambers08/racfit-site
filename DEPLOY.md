@@ -108,13 +108,13 @@ not transfer.
 
 ## Forms
 
-Seven forms, all handled by `functions/api/[form].js` - a Cloudflare Pages Function
-that verifies Turnstile and sends through SparkPost. No third-party form service.
+Seven forms, all handled by `src/index.js` - a Cloudflare Worker that verifies
+Turnstile and sends through Resend. No third-party form service.
 
 Full detail, including the environment variables you must set, is in **FORMS.md**.
 Two things that will bite if missed:
 
-- The Worker needs `SPARKPOST_API_KEY` and `TURNSTILE_SECRET` as **secrets**
+- The Worker needs `RESEND_API_KEY` and `TURNSTILE_SECRET` as **secrets**
   (Worker → Settings → Variables and Secrets). Those two are the only ones you
   must set — the Turnstile *site* key is public and committed.
 - `src/index.js` is the Worker, deployed as source. `wrangler.jsonc` points at it

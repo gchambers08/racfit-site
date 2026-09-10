@@ -12,11 +12,10 @@
  * file is deployed as-is.
  *
  * Required Pages environment variables (Settings > Environment variables):
- *   SPARKPOST_API_KEY    secret. Needs only the "Transmissions: Read/Write" grant.
+ *   RESEND_API_KEY       secret. A Resend key with Sending access only.
  *   TURNSTILE_SECRET     secret. From the Turnstile widget.
  *
  * Optional:
- *   SPARKPOST_BASE       https://api.eu.sparkpost.com for an EU account.
  *   ALLOW_UNVERIFIED     "true" lets forms work before Turnstile exists.
  *                        Never set this in production - see verifyTurnstile().
  *   SUBMISSIONS          KV namespace binding. If bound, every submission is
@@ -40,8 +39,8 @@
 const SITE = {
   name: 'RacFit',
   origin: 'https://goracfit.com',
-  // Must be on a domain verified in SparkPost. This is the apex, so SparkPost's
-  // DKIM and SPF go on goracfit.com itself - the same domain staff mail runs on.
+  // Must be on a domain verified in Resend. This is the apex, so the DKIM and
+  // SPF records go on goracfit.com itself - the same domain staff mail runs on.
   // See FORMS.md before touching the SPF record.
   from: { email: 'contact@goracfit.com', name: 'RacFit Website' },
   thankYou: '/thank-you',
@@ -278,36 +277,38 @@ async function verifyTurnstile(env, token, request) {
    EMAIL
    ======================================================================== */
 
+// Resend: POST https://api.resend.com/emails, Bearer auth, one flat JSON body.
+// `from` takes a "Name <address>" string rather than an object.
+const RESEND_ENDPOINT = 'https://api.resend.com/emails';
+
 async function send(env, msg) {
-  if (!env.SPARKPOST_API_KEY) return errorPage('Email is not configured yet.', 503);
-  const base = env.SPARKPOST_BASE || 'https://api.sparkpost.com';
+  if (!env.RESEND_API_KEY) return errorPage('Email is not configured yet.', 503);
 
   const payload = {
-    options: { transactional: true },
-    recipients: [{ address: { email: msg.to } }],
-    content: {
-      from: SITE.from,
-      subject: msg.subject,
-      text: msg.text,
-      html: msg.html,
-    },
+    from: SITE.from.name + ' <' + SITE.from.email + '>',
+    to: [msg.to],
+    subject: msg.subject,
+    text: msg.text,
+    html: msg.html,
   };
-  if (msg.replyTo) payload.content.reply_to = msg.replyTo;
+  // The submitter's address, already validated as an email upstream. It is a
+  // reply target only and is never added to `to` - see the header notes.
+  if (msg.replyTo) payload.reply_to = msg.replyTo;
 
   try {
-    const r = await fetch(base + '/api/v1/transmissions', {
+    const r = await fetch(RESEND_ENDPOINT, {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer ' + env.SPARKPOST_API_KEY,
+        'Authorization': 'Bearer ' + env.RESEND_API_KEY,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload),
     });
     if (r.ok) return true;
     // Log the status only - never the key, never the visitor's details.
-    console.error('sparkpost rejected the send', r.status);
+    console.error('resend rejected the send', r.status);
   } catch (e) {
-    console.error('sparkpost unreachable', e && e.message);
+    console.error('resend unreachable', e && e.message);
   }
   return errorPage(
     'We could not send that just now. Please try again, or call us on ' + SITE.phone + '.',

@@ -12,6 +12,11 @@ site-mirror.tar.gz
 # Local preview copies made by double-clicking a zip in Finder.
 racfit-site-full*/
 
+# Wrangler's local build and dev cache. Machine-specific, regenerated on every
+# `wrangler dev`/`deploy`, and it embeds a bundled copy of the handler that goes
+# stale the moment src/index.js changes.
+.wrangler/
+
 # QA scaffolding
 _qa_out.txt
 _qafonts/

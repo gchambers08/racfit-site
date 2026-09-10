@@ -1,18 +1,18 @@
 # Forms
 
 Static site, no backend, no third-party form service. A Cloudflare Worker takes the
-POST, verifies a Turnstile token, and sends the email through SparkPost.
+POST, verifies a Turnstile token, and sends the email through Resend.
 
 The handler is `src/index.js`, deployed exactly as written — no compile step, no
 dependencies. It does its own routing on `/api/<form>` in four lines at the
 bottom of the file.
 
-    browser  ──POST /api/<form>──>  functions/api/[form].js
+    browser  ──POST /api/<form>──>  src/index.js  (the Worker)
                                       │
                                       ├─ honeypot check        (silent drop)
                                       ├─ Turnstile siteverify  (fails closed)
                                       ├─ validate against the registry
-                                      ├─ SparkPost transmissions API
+                                      ├─ Resend send API
                                       ├─ archive to KV         (optional)
                                       └─ 303 ──> /thank-you?f=<form>
 
@@ -47,10 +47,9 @@ Set on the Worker: **Settings → Variables and Secrets**. Add the two credentia
 
 | Name | Type | Notes |
 |---|---|---|
-| `SPARKPOST_API_KEY` | secret | Needs only the **Transmissions: Read/Write** grant. Nothing else. |
+| `RESEND_API_KEY` | secret | Create it in Resend with **Sending access** only, scoped to `goracfit.com`. Nothing else. |
 | `TURNSTILE_SECRET` | secret | From the Turnstile widget. |
 | `TURNSTILE_SITEKEY` | *not needed* | The site key is public and is committed as the default in `build.py`, so a local build matches production. Set this only to point a second site or a test widget at a different key. |
-| `SPARKPOST_BASE` | optional | `https://api.eu.sparkpost.com` for an EU account. |
 | `SUBMISSIONS` | optional | KV namespace **binding** in `wrangler.jsonc`. Bind it and every submission is archived; leave it unbound and that step is skipped silently. |
 | `ALLOW_UNVERIFIED` | testing only | `"true"` lets forms work before the Turnstile widget exists. **Never set in production.** |
 
@@ -62,24 +61,33 @@ Turnstile verification **fails closed**: with no `TURNSTILE_SECRET` and no
 `ALLOW_UNVERIFIED`, forms return 503 rather than accepting unverified mail. That is
 deliberate — an unprotected public mail endpoint gets abused within days.
 
-## SparkPost setup
+## Resend setup
 
-Sending address is `contact@goracfit.com`, so the domain to verify in SparkPost is
-the **apex** — the same domain staff mail runs on. That works, but two records need
-care:
+Sending address is `contact@goracfit.com`, so add **`goracfit.com`** as the domain
+in Resend. Resend then asks for records on a `send.` subdomain rather than the apex,
+which is the reason this is low-risk: **the club's existing apex MX and SPF records
+are not touched.**
 
-1. **DKIM.** Add the CNAME or TXT selector SparkPost gives you. Multiple DKIM
-   selectors coexist happily, so this cannot disturb existing mail.
-2. **SPF.** There must be exactly **one** SPF TXT record on a domain. Do not add a
-   second one — add SparkPost's `include:` to the record already there:
+Expect roughly this set — copy the actual values from the Resend dashboard, do not
+retype these:
 
-       v=spf1 include:_spf.google.com include:sparkpostmail.com ~all
+| Type | Host | Purpose |
+|---|---|---|
+| MX | `send` | Return path for bounces and complaints. Priority 10. |
+| TXT | `send` | SPF for the return path, e.g. `v=spf1 include:amazonses.com ~all`. |
+| TXT / CNAME | `resend._domainkey` | DKIM. Signs as `goracfit.com`, which is what gives DMARC alignment. |
+| CNAME | `links` | Optional, click tracking. Not needed for these forms — skip it. |
 
-   Two SPF records is a permanent error state and breaks *all* mail from the
-   domain, including staff email. SPF also has a hard limit of 10 DNS lookups;
-   check the total if the record already has several includes.
-3. Send a test through each form and confirm it lands in the inbox, not spam,
-   before launch. DKIM alignment is what keeps it out of spam once DMARC is on.
+Three things to get right:
+
+1. **Do not touch the apex SPF record.** Resend's SPF goes on `send.goracfit.com`.
+   Editing the apex record is how you break staff email, and it is not required
+   here. If a guide tells you to add an `include:` at the apex, it is describing a
+   different setup.
+2. **Do not enable Inbound on `goracfit.com`.** Inbound makes Resend receive *all*
+   mail for the domain it is enabled on. This is a send-only setup.
+3. **Test each form before launch** and confirm it lands in the inbox, not spam.
+   DKIM alignment is what keeps it there once DMARC is on.
 
 **Note on from == to.** Five of the seven forms deliver to `contact@goracfit.com`,
 which is now also the sending address, so those messages are from and to the same
@@ -88,11 +96,16 @@ self-addressed mail threads awkwardly in Gmail and some filters view it with
 suspicion. A dedicated `website@goracfit.com` as the sender would avoid both — it
 is a one-line change to `SITE.from`.
 
-SparkPost is now part of Bird. The free developer tier is around 500 emails/month,
-which covers a club's form volume; past that, pricing is "contact sales" with
-nothing published. **Confirm the current tier before launch.** Swapping provider is
-a change to the one `fetch` call in `send()` — Resend and Postmark take a nearly
-identical payload — so this is not a lock-in decision.
+**Why Resend and not SparkPost.** SparkPost was the original choice, but it is now
+Bird, and a new signup lands on Bird's platform API (`/v1/email/messages`) rather
+than the legacy `api.sparkpost.com/api/v1/transmissions` endpoint the handler was
+first written against. Rather than target an API mid-rebrand, this sends through
+Resend: stable endpoint, one flat JSON body, an official Cloudflare Workers
+tutorial, and DNS records that stay off the apex.
+
+Swapping provider again is a change to the one `fetch` call in `send()` — Postmark
+and most others take a nearly identical payload — so this is not a lock-in
+decision. **Confirm the current free-tier limits before launch either way.**
 
 ## Porting this to another site
 

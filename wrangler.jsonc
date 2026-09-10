@@ -41,7 +41,7 @@
 
   "observability": {
     // Keeps the Worker's console.error output visible in the dashboard, which is
-    // where a SparkPost rejection or a Turnstile failure shows up. The handler
+    // where a Resend rejection or a Turnstile failure shows up. The handler
     // logs status codes only - never a key, never a visitor's details.
     "enabled": true
   }
