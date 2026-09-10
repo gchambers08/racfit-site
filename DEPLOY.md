@@ -23,17 +23,21 @@ Nothing else is manual. There is no zip to upload.
 | Setting | Value |
 |---|---|
 | Project name | `racfit-site` |
-| Build command | `python3 build.py && npx wrangler pages functions build --outdir=./dist/worker/` |
+| Build command | `npm run build` |
 | Deploy command | `npx wrangler deploy` |
 | Production branch | `main` |
 
 Everything else comes from `wrangler.jsonc`, which is the real source of truth for
 the deploy: the assets directory, the 404 behaviour, and the Worker routing.
 
-`build.py` is standard-library Python 3 only, so any Python in the build image
-works. The second half of the build command compiles `functions/api/[form].js`
-into `dist/worker/index.js` — that is what lets the handler stay in the readable
-Pages Functions layout instead of being rewritten as a Worker entrypoint.
+`npm run build` runs `python3 build.py` and nothing else. `build.py` is
+standard-library Python 3 only, so any Python in the build image works, and there
+are no npm dependencies to install.
+
+The form handler at `src/index.js` is deployed as written — no compile step. It
+began life in the Pages Functions layout, compiled by
+`wrangler pages functions build`, but that step was one more thing to fail in CI
+and bought nothing for a single dynamic route.
 
 ### The one setting that is easy to get wrong
 
@@ -113,8 +117,8 @@ Two things that will bite if missed:
 - The Worker needs `SPARKPOST_API_KEY` and `TURNSTILE_SECRET` as **secrets**
   (Worker → Settings → Variables and Secrets). Those two are the only ones you
   must set — the Turnstile *site* key is public and committed.
-- `functions/` lives at the **repo root** and is compiled by the build command.
-  Do not move it into `dist/`.
+- `src/index.js` is the Worker, deployed as source. `wrangler.jsonc` points at it
+  via `main`. Do not move it into `dist/`, which is rebuilt and is gitignored.
 
 After touching any form, run `python3 check-forms.py`. It compares the markup
 against the handler's field registry and fails on a mismatch - which is otherwise

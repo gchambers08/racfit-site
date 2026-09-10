@@ -10,6 +10,7 @@ Builds the site twice, from one source, into two forms:
   dist/client/    extensionless internal links and canonicals, plus assets,
                   robots.txt, sitemap.xml, 404.html and _redirects.
                   This is the static asset directory Cloudflare serves.
+                  The Worker itself is src/index.js, deployed as source.
 
   dist/worker/    NOT written here - the Cloudflare build step compiles
                   functions/ into it with `wrangler pages functions build`.

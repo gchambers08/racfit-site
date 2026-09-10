@@ -1,9 +1,15 @@
 /**
- * Static-site form handler for Cloudflare Pages Functions.
+ * Static-site form handler. A plain Worker module entrypoint.
  * Route: POST /api/<form>   e.g. /api/contact, /api/tour
  *
- * Deliberately one self-contained file with no imports, so porting it to
- * another site is: copy this file, rewrite the CONFIG block, done.
+ * Deliberately one self-contained file with no imports and no build step, so
+ * porting it to another site is: copy this file, rewrite the CONFIG block, done.
+ *
+ * This was originally written in the Pages Functions layout and compiled with
+ * `wrangler pages functions build`. That compile step was one more thing to go
+ * wrong in CI for no benefit - filesystem routing buys nothing when there is a
+ * single dynamic route - so the routing is now four lines at the bottom and the
+ * file is deployed as-is.
  *
  * Required Pages environment variables (Settings > Environment variables):
  *   SPARKPOST_API_KEY    secret. Needs only the "Transmissions: Read/Write" grant.
@@ -144,8 +150,8 @@ const FORMS = {
    HANDLER
    ======================================================================== */
 
-export const onRequestPost = async ({ request, env, params }) => {
-  const form = FORMS[params.form];
+async function handleSubmission(request, env, formKey) {
+  const form = FORMS[formKey];
   if (!form) return new Response('Not found', { status: 404 });
 
   let body;
@@ -157,7 +163,7 @@ export const onRequestPost = async ({ request, env, params }) => {
 
   // Honeypot. A real browser leaves it empty; most bots fill every field.
   // Answer as though it succeeded so the bot learns nothing.
-  if ((body.get('_gotcha') || '').trim() !== '') return seeOther(params.form);
+  if ((body.get('_gotcha') || '').trim() !== '') return seeOther(formKey);
 
   const captcha = await verifyTurnstile(env, body.get('cf-turnstile-response'), request);
   if (captcha !== true) return captcha;
@@ -180,16 +186,33 @@ export const onRequestPost = async ({ request, env, params }) => {
   });
   if (sent !== true) return sent;
 
-  await archive(env, params.form, values, request);
-  return seeOther(params.form);
-};
+  await archive(env, formKey, values, request);
+  return seeOther(formKey);
+}
 
-// A GET on a form endpoint is someone poking at it, or a mistyped action.
-export const onRequestGet = () =>
-  new Response('This endpoint accepts POST only.', {
-    status: 405,
-    headers: { 'Allow': 'POST', 'Content-Type': 'text/plain; charset=utf-8' },
-  });
+/* ========================================================================
+   ROUTING
+
+   wrangler.jsonc scopes this Worker to /api/* via run_worker_first, so static
+   pages never reach it. The checks below are belt and braces.
+   ======================================================================== */
+
+export default {
+  async fetch(request, env) {
+    const path = new URL(request.url).pathname;
+    const match = path.match(/^\/api\/([a-z][a-z0-9-]*)\/?$/);
+    if (!match) return new Response('Not found', { status: 404 });
+
+    if (request.method !== 'POST') {
+      // A GET here is someone poking at the endpoint, or a mistyped action.
+      return new Response('This endpoint accepts POST only.', {
+        status: 405,
+        headers: { 'Allow': 'POST', 'Content-Type': 'text/plain; charset=utf-8' },
+      });
+    }
+    return handleSubmission(request, env, match[1]);
+  },
+};
 
 /* ========================================================================
    VALIDATION

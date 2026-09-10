@@ -13,7 +13,7 @@ Exits non-zero on any mismatch, so it can gate a commit.
 import io, re, glob, os, sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__)) or '.'
-HANDLER = os.path.join(ROOT, 'functions', 'api', '[form].js')
+HANDLER = os.path.join(ROOT, 'src', 'index.js')
 PAGES = os.path.join(ROOT, 'dist', 'client', '*.html')
 IGNORE = {'_gotcha', 'cf-turnstile-response'}
 
@@ -32,7 +32,7 @@ def registry():
 def main():
     reg = registry()
     if not reg:
-        sys.exit('could not parse the FORMS registry - has the handler moved?')
+        sys.exit('could not parse the FORMS registry in src/index.js')
 
     seen, problems = set(), []
     for page in sorted(glob.glob(PAGES)):

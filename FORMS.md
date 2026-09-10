@@ -3,9 +3,9 @@
 Static site, no backend, no third-party form service. A Cloudflare Worker takes the
 POST, verifies a Turnstile token, and sends the email through SparkPost.
 
-The handler source stays in the Pages Functions layout (`functions/api/[form].js`)
-because it is far more readable that way; the build compiles it into a single
-Worker script with `wrangler pages functions build`.
+The handler is `src/index.js`, deployed exactly as written — no compile step, no
+dependencies. It does its own routing on `/api/<form>` in four lines at the
+bottom of the file.
 
     browser  ──POST /api/<form>──>  functions/api/[form].js
                                       │
@@ -96,9 +96,9 @@ identical payload — so this is not a lock-in decision.
 
 ## Porting this to another site
 
-The handler is one file with no imports, on purpose.
+The handler is one file with no imports and no build step, on purpose.
 
-1. Copy `functions/api/[form].js` and `wrangler.jsonc` into the new project.
+1. Copy `src/index.js` and `wrangler.jsonc` into the new project.
 2. Rewrite the `CONFIG` block at the top: `SITE` and the `FORMS` registry.
    In `wrangler.jsonc`, change `name` and keep `run_worker_first: ["/api/*"]` —
    without it the asset layer answers the form POSTs with the 404 page.

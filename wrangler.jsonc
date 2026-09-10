@@ -4,19 +4,19 @@
   // 26 static pages are served from dist/client, and the form handler that used
   // to be a Pages Function is compiled into dist/worker.
   //
-  // Build:   python3 build.py && npx wrangler pages functions build --outdir=./dist/worker/
+  // Build:   python3 build.py      (that is the whole build)
   // Deploy:  npx wrangler deploy
   //
-  // Neither dist/ nor node_modules is committed - Cloudflare builds both from
-  // source on every push.
+  // dist/ is not committed - Cloudflare rebuilds it from source on every push.
 
   "name": "racfit-site",
   "compatibility_date": "2026-09-10",
 
-  // The compiled form handler. `wrangler pages functions build` turns
-  // functions/api/[form].js into this single script, routing included, so the
-  // handler source stays in the Pages Functions layout and needs no rewrite.
-  "main": "./dist/worker/index.js",
+  // The form handler, deployed as written. It used to be compiled from a
+  // functions/ directory by `wrangler pages functions build`; that step was one
+  // more thing to fail in CI and bought nothing for a single dynamic route, so
+  // the file now does its own routing and ships as source.
+  "main": "./src/index.js",
 
   "assets": {
     "directory": "./dist/client/",

@@ -3,7 +3,7 @@
   "private": true,
   "description": "goracfit.com - static site on Cloudflare Workers with static assets",
   "scripts": {
-    "build": "python3 build.py && npx --yes wrangler@4 pages functions build --outdir=./dist/worker/",
+    "build": "python3 build.py",
     "check": "python3 check-forms.py",
     "deploy": "npx --yes wrangler@4 deploy",
     "dev": "npx --yes wrangler@4 dev"
