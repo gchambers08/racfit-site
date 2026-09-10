@@ -1,8 +1,7 @@
 {
   // Cloudflare Worker with static assets. Cloudflare retired new Pages projects,
-  // so this is the Workers equivalent of what used to be a Pages project: the
-  // 26 static pages are served from dist/client, and the form handler that used
-  // to be a Pages Function is compiled into dist/worker.
+  // so this is the Workers equivalent: the 26 static pages are served from
+  // dist/client, and src/index.js handles the form POSTs.
   //
   // Build:   python3 build.py      (that is the whole build)
   // Deploy:  npx wrangler deploy
