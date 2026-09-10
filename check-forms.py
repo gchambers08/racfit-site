@@ -14,7 +14,7 @@ import io, re, glob, os, sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__)) or '.'
 HANDLER = os.path.join(ROOT, 'functions', 'api', '[form].js')
-PAGES = os.path.join(ROOT, 'dist', '*.html')
+PAGES = os.path.join(ROOT, 'dist', 'client', '*.html')
 IGNORE = {'_gotcha', 'cf-turnstile-response'}
 
 
