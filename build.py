@@ -55,7 +55,7 @@ TURNSTILE_SITEKEY = os.environ.get(
 # Copied into dist as-is. _redirects is consumed by Cloudflare Pages at the
 # site root, not served.
 DIST_FILES = ['favicon.ico', 'robots.txt', 'sitemap.xml', '404.html']
-DIST_DIRS = ['assets']
+DIST_DIRS = ['assets', 'tv']
 DIST_RENAME = [('redirects/_redirects-extensionless', '_redirects')]
 
 # Source and tooling. Never published - _pages/*.body.html alone would put 25

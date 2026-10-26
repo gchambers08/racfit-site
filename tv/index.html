@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>RacFit TV</title>
+<script>
+  /* /tv must become /tv/ so the relative paths below resolve inside /tv/. */
+  (function(){var p=location.pathname;
+    if(/^https?:$/.test(location.protocol)&&!/\/$/.test(p)&&!/\.html$/.test(p))
+      location.replace(p+'/'+location.search);})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=block" rel="stylesheet">
+<style>
+:root{
+  --deep:#102748; --blue:#295DA8; --optic:#D9F53C; --white:#fff;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000;overflow:hidden;cursor:none}
+body{font-family:"Barlow",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+
+/* Everything is laid out on a fixed 1920x1080 stage, then scaled to the screen. */
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;
+  transform-origin:center center;overflow:hidden;background:var(--deep)}
+
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .9s ease;
+  --bg:var(--deep); --accent:var(--optic); --text:#fff; --onaccent:var(--deep);
+  background:var(--bg);color:var(--text)}
+.slide.on{opacity:1}
+.t-blue{--bg:var(--blue)}
+.t-holiday{--accent:#E23B4A;--onaccent:#fff}
+.t-tt{--bg:#0F3D32;--accent:#DCF312;--text:#F7F3E8;--onaccent:#0F3D32}
+
+/* ---------- promo ---------- */
+.photo{position:absolute;top:0;right:0;bottom:0;width:1075px;overflow:hidden;
+  clip-path:polygon(170px 0,100% 0,100% 100%,0 100%)}
+.photo img{width:100%;height:100%;object-fit:cover;transform:scale(1.1);
+  transition:transform var(--dur,12s) linear}
+.on .photo img{transform:scale(1.0)}
+.photo.contain img{object-fit:contain;padding:90px 70px 90px 230px;transform:scale(.96)}
+.on .photo.contain img{transform:scale(1.02)}
+.photo.split{display:flex;flex-direction:column;gap:14px;background:var(--accent)}
+.photo.split img{height:auto;flex:1 1 0;min-height:0}
+.photo::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(0,0,0,.18),rgba(0,0,0,0) 30%)}
+.photo.contain::after{display:none}
+.stripe{position:absolute;inset:0;background:var(--accent);pointer-events:none;
+  transform:translateX(-90px);opacity:0;transition:transform 1s var(--ease) .15s,opacity .6s ease .15s}
+.stripe.s1{clip-path:polygon(1000px 0,1032px 0,862px 1080px,830px 1080px)}
+.stripe.s2{clip-path:polygon(948px 0,960px 0,790px 1080px,778px 1080px)}
+.on .stripe{transform:none;opacity:1}
+
+.copy{position:absolute;left:110px;top:92px;bottom:92px;width:660px;
+  display:flex;flex-direction:column}
+.logo{height:58px;width:auto;align-self:flex-start}
+.mid{flex:1 1 0;min-height:0;display:flex;flex-direction:column;justify-content:center;padding:24px 0}
+.pill{align-self:flex-start;display:inline-flex;align-items:center;height:52px;padding:0 24px;
+  background:var(--accent);color:var(--onaccent);border-radius:999px;
+  font:700 26px/1 "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;
+  white-space:nowrap}
+.headline{margin-top:0;font-family:"Anton",Impact,sans-serif;font-weight:400;
+  text-transform:uppercase;line-height:1.0;letter-spacing:-.005em;font-size:132px;
+  white-space:nowrap;width:660px}
+.headline .a{color:var(--accent)}
+.text{margin-top:30px;font-size:46px;line-height:1.18;font-weight:600;max-width:660px}
+.chips{margin-top:34px;display:flex;flex-wrap:wrap;gap:14px}
+.chip{display:inline-flex;align-items:center;height:76px;padding:0 26px;border-radius:8px;
+  background:#fff;color:var(--deep);
+  font:700 42px/1 "Barlow Condensed",sans-serif;letter-spacing:.03em;text-transform:uppercase;white-space:nowrap}
+.t-tt .chip{background:#F7F3E8;color:#0F3D32}
+.cta{display:flex;align-items:center;gap:30px}
+.qr{width:200px;height:200px;background:#fff;border-radius:10px;padding:14px;flex:none}
+.qr svg{display:block;width:100%;height:100%}
+.cta-big{font-family:"Anton",Impact,sans-serif;text-transform:uppercase;font-size:64px;white-space:nowrap;max-width:660px;line-height:1.02;color:var(--accent)}
+.cta-sub{margin-top:12px;font:600 32px/1.2 "Barlow Condensed",sans-serif;letter-spacing:.07em;text-transform:uppercase}
+
+/* mirrored layout: photo left, copy right */
+.flip .photo{right:auto;left:0;clip-path:polygon(0 0,905px 0,100% 100%,0 100%)}
+.flip .photo.contain img{padding:90px 230px 90px 70px}
+.flip .photo::after{background:linear-gradient(270deg,rgba(0,0,0,.18),rgba(0,0,0,0) 30%)}
+.flip .stripe{transform:translateX(90px)}
+.flip .stripe.s1{clip-path:polygon(888px 0,920px 0,1090px 1080px,1058px 1080px)}
+.flip .stripe.s2{clip-path:polygon(960px 0,972px 0,1142px 1080px,1130px 1080px)}
+.flip.on .stripe{transform:none}
+.flip .copy{left:1150px}
+
+/* floating balloons */
+.balloons{position:absolute;top:0;bottom:0;right:0;width:1075px;pointer-events:none;z-index:2}
+.flip .balloons{right:auto;left:0}
+.bl{position:absolute;bottom:-340px;animation:rise var(--d) linear var(--delay) infinite;will-change:transform}
+.bl .sway{animation:sway var(--sw) ease-in-out infinite alternate;transform-origin:50% 0}
+.bl svg{display:block;width:calc(120px * var(--s));height:auto;filter:drop-shadow(0 10px 18px rgba(0,0,0,.28))}
+@keyframes rise{from{transform:translateY(0)}to{transform:translateY(-1520px)}}
+@keyframes sway{from{transform:translateX(-16px) rotate(-5deg)}to{transform:translateX(16px) rotate(5deg)}}
+
+/* entrance */
+.rise{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .9s var(--ease)}
+.on .rise{opacity:1;transform:none}
+.on .d1{transition-delay:.25s}.on .d2{transition-delay:.4s}.on .d3{transition-delay:.55s}
+.on .d4{transition-delay:.7s}.on .d5{transition-delay:.85s}.on .d6{transition-delay:1s}
+
+/* ---------- member of the month ---------- */
+.m-photo{position:absolute;left:140px;top:120px;width:680px;height:840px}
+.m-photo::before{content:"";position:absolute;inset:0;transform:translate(34px,34px);background:var(--accent)}
+.m-photo .frame{position:absolute;inset:0;overflow:hidden}
+.m-photo img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform var(--dur,12s) linear}
+.on .m-photo img{transform:scale(1)}
+.m-copy{position:absolute;left:960px;right:120px;top:120px;bottom:120px;display:flex;flex-direction:column;justify-content:center}
+.m-month{margin-top:26px;font:600 34px/1 "Barlow Condensed",sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+.m-name{margin-top:18px;font-family:"Anton",Impact,sans-serif;text-transform:uppercase;font-size:150px;line-height:1;white-space:nowrap;width:840px}
+.m-detail{margin-top:22px;font:700 34px/1.1 "Barlow Condensed",sans-serif;letter-spacing:.07em;text-transform:uppercase;color:var(--accent)}
+.m-quote{margin-top:44px;position:relative;padding-left:74px;font-size:40px;line-height:1.38;font-weight:500}
+.m-quote::before{content:"\201C";position:absolute;left:-6px;top:-34px;font:400 150px/1 "Anton",sans-serif;color:var(--accent)}
+.m-logo{position:absolute;right:120px;bottom:90px;height:50px}
+
+/* ---------- full-screen image / video ---------- */
+.full{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.full.contain{object-fit:contain}
+.blur{position:absolute;inset:-60px;width:calc(100% + 120px);height:calc(100% + 120px);
+  object-fit:cover;filter:blur(40px) brightness(.55)}
+
+/* progress bar */
+#bar{position:absolute;left:0;bottom:0;height:8px;width:0;background:var(--optic);z-index:5}
+#bar.go{transition:width var(--dur,12s) linear;width:100%}
+
+/* nothing to show */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px}
+.empty img{height:110px}
+.empty p{font:600 34px/1 "Barlow Condensed",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--optic)}
+</style>
+</head>
+<body>
+<div id="stage"><div id="bar"></div></div>
+
+<script src="qr.js"></script>
+<script src="slides.js"></script>
+<script>
+(function(){
+  var CFG = window.RACFIT_TV || {slides:[]};
+  var DEF = CFG.defaultSeconds || 12;
+  var CHECK_MS = (CFG.checkForUpdatesMinutes || 10) * 60000;
+  var LOGO = '../assets/logos/racfit-white.png';
+  var stage = document.getElementById('stage');
+  var bar = document.getElementById('bar');
+  var params = new URLSearchParams(location.search);
+  var pinned = params.has('slide') ? parseInt(params.get('slide'), 10) : null; // ?slide=3 holds one slide (for previewing)
+  var ignoreDates = params.has('all');                                       // ?all previews every slide, ignoring dates and show:false
+  var loadedAt = Date.now();
+  var timer = null, current = null, index = -1;
+
+  /* scale the 1920x1080 stage to the screen */
+  function scale(){ return Math.min(innerWidth/1920, innerHeight/1080); }
+  function fit(){
+    var s = scale();
+    stage.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+  }
+  addEventListener('resize', fit); fit();
+
+  function today(){
+    var d = new Date();
+    return d.getFullYear() + '-' + ('0'+(d.getMonth()+1)).slice(-2) + '-' + ('0'+d.getDate()).slice(-2);
+  }
+  function active(){
+    var t = today();
+    return (CFG.slides || []).filter(function(s){
+      if (!s) return false;
+      if (ignoreDates) return true;
+      if (s.show === false) return false;
+      if (s.start && t < s.start) return false;
+      if (s.end && t > s.end) return false;
+      return true;
+    });
+  }
+
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  /* "Line one\n[accent words]" -> HTML */
+  function headline(s){
+    return esc(s).split('\n').map(function(line){
+      return line.replace(/\[([^\]]*)\]/g, '<span class="a">$1</span>');
+    }).join('<br>');
+  }
+  function qrSvg(url){
+    try{
+      var q = qrcode(0, 'M'); q.addData(url); q.make();
+      var n = q.getModuleCount(), d = '';
+      for (var r=0;r<n;r++) for (var c=0;c<n;c++) if (q.isDark(r,c)) d += 'M'+c+' '+r+'h1v1h-1z';
+      return '<svg viewBox="0 0 '+n+' '+n+'" shape-rendering="crispEdges"><path fill="#102748" d="'+d+'"/></svg>';
+    }catch(e){ return ''; }
+  }
+  /* shrink a one-line-per-row block until it fits its box */
+  function shrink(el, maxH){
+    var size = parseFloat(getComputedStyle(el).fontSize);
+    while (size > 40 && (el.scrollWidth > el.clientWidth + 1 || (maxH && el.offsetHeight > maxH))){
+      size -= 3; el.style.fontSize = size + 'px';
+    }
+  }
+
+  function balloons(){
+    // x positions keep to the open edges of the photo so faces stay clear
+    var colors = ['#D9F53C','#FFFFFF','#5B8FE0','#FF5A5F','#FFC94D','#D9F53C','#FF5A5F','#FFFFFF'];
+    var spots = [150, 990, 330, 450, 230, 960, 380, 1030];
+    var h = '<div class="balloons">';
+    for (var i = 0; i < spots.length; i++){
+      var sc = (0.85 + ((i * 37) % 7) / 10).toFixed(2);     // 0.85 - 1.45
+      var dur = 9 + (i * 13) % 5;                            // 9 - 13s to cross the screen
+      var delay = -((i * 2.3) % dur).toFixed(1);             // already mid-flight when the slide appears
+      var c = colors[i];
+      h += '<div class="bl" style="left:'+spots[i]+'px;--s:'+sc+';--d:'+dur+'s;--delay:'+delay+'s">' +
+           '<div class="sway" style="--sw:'+(2.6 + (i % 3) * 0.7)+'s">' +
+           '<svg viewBox="0 0 120 270"><ellipse cx="60" cy="64" rx="54" ry="62" fill="'+c+'"/>' +
+           '<ellipse cx="74" cy="78" rx="40" ry="48" fill="#000" opacity=".10"/>' +
+           '<ellipse cx="40" cy="40" rx="11" ry="20" fill="#fff" opacity=".55" transform="rotate(-25 40 40)"/>' +
+           '<path d="M53 124 L67 124 L60 134 Z" fill="'+c+'"/>' +
+           '<path d="M60 134 C48 166 74 192 58 222 S66 252 60 270" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="2"/></svg>' +
+           '</div></div>';
+    }
+    return h + '</div>';
+  }
+
+  function build(s, flip){
+    var el = document.createElement('div');
+    el.className = 'slide t-' + (s.theme || 'navy') + (flip ? ' flip' : '');
+    var type = s.type || 'promo';
+
+    if (type === 'promo'){
+      var h = '';
+      if (s.photo){
+        var ph = [].concat(s.photo), pos = [].concat(s.photoPos || 'center');
+        h += '<div class="photo' + (s.photoFit === 'contain' ? ' contain' : '') + (ph.length > 1 ? ' split' : '') + '">' +
+          ph.map(function(src, k){ return '<img src="'+esc(src)+'" alt="" style="object-position:'+esc(pos[k] || pos[0])+'">'; }).join('') +
+          '</div>';
+      }
+      h += '<div class="stripe s1"></div><div class="stripe s2"></div>';
+      if (s.effect === 'balloons') h += balloons();
+      h += '<div class="copy">';
+      if (s.logo === true) h += '<img class="logo rise" src="'+LOGO+'" alt="RacFit">';
+      h += '<div class="mid">';
+      if (s.headline) h += '<div class="headline rise d2">'+headline(s.headline)+'</div>';
+      if (s.text) h += '<p class="text rise d3">'+esc(s.text)+'</p>';
+      if (s.chips && s.chips.length) h += '<div class="chips rise d4">' + s.chips.map(function(c){return '<span class="chip">'+esc(c)+'</span>';}).join('') + '</div>';
+      h += '</div>';
+      if (s.qr || s.cta){
+        h += '<div class="cta rise d5">';
+        if (s.qr) h += '<div class="qr">'+qrSvg(s.qr)+'</div>';
+        h += '<div>' + (s.cta ? '<div class="cta-big">'+esc(s.cta)+'</div>' : '') + (s.ctaSub ? '<div class="cta-sub">'+esc(s.ctaSub)+'</div>' : '') + '</div>';
+        h += '</div>';
+      }
+      h += '</div>';
+      el.innerHTML = h;
+    }
+    else if (type === 'member'){
+      el.innerHTML =
+        '<div class="m-photo rise"><div class="frame"><img src="'+esc(s.photo)+'" alt=""></div></div>' +
+        '<div class="m-copy">' +
+          (s.month ? '<div class="m-month rise d2">'+esc(s.month)+'</div>' : '') +
+          '<div class="m-name rise d2">'+esc(s.name)+'</div>' +
+          (s.detail ? '<div class="m-detail rise d3">'+esc(s.detail)+'</div>' : '') +
+          (s.quote ? '<p class="m-quote rise d4">'+esc(s.quote)+'</p>' : '') +
+        '</div>';
+    }
+    else if (type === 'image'){
+      var contain = s.fit === 'contain';
+      el.innerHTML = (contain ? '<img class="blur" src="'+esc(s.src)+'" alt="">' : '') +
+        '<img class="full' + (contain ? ' contain' : '') + '" src="'+esc(s.src)+'" alt="">';
+    }
+    else if (type === 'video'){
+      el.innerHTML = '<video class="full" muted playsinline preload="auto" src="'+esc(s.src)+'"></video>';
+    }
+    return el;
+  }
+
+  /* After a full loop, check whether slides.js changed by reloading the page (only if the server answers). */
+  function maybeReload(cb){
+    if (pinned !== null || !/^https?:$/.test(location.protocol) || Date.now() - loadedAt < CHECK_MS) return cb();
+    fetch('slides.js?check=' + Date.now(), {cache:'no-store'})
+      .then(function(r){ if (r.ok) location.reload(); else cb(); })
+      .catch(cb);
+  }
+
+  function show(){
+    var list = active();
+    if (!list.length){
+      var e = document.createElement('div');
+      e.className = 'slide empty on';
+      e.innerHTML = '<img src="'+LOGO+'" alt="RacFit"><p>goracfit.com</p>';
+      swap(e); timer = setTimeout(function(){ maybeReload(show); }, 60000); return;
+    }
+    if (pinned !== null) index = Math.max(0, Math.min(pinned, list.length-1));
+    else index = (index + 1) % list.length;
+    var s = list[index];
+    var secs = (s.seconds || DEF);
+    // alternate the layout: every other promo slide puts the photo on the left
+    var flip = s.side ? s.side === 'left' : list.slice(0, index).filter(function(x){ return (x.type || 'promo') === 'promo'; }).length % 2 === 1;
+    var el = build(s, flip);
+    el.style.setProperty('--dur', secs + 's');
+    stage.insertBefore(el, bar);
+
+    // headline / name auto-fit
+    var hl = el.querySelector('.headline');
+    if (hl){
+      shrink(hl, 420);
+      // then keep shrinking until the whole left column fits with room to breathe
+      var copy = el.querySelector('.copy'), mid = el.querySelector('.mid'), size = parseFloat(hl.style.fontSize || 132);
+      var tooTall = function(){ var kids = mid.children; if (!kids.length) return false;
+        var span = kids[kids.length-1].getBoundingClientRect().bottom - kids[0].getBoundingClientRect().top;
+        return span / scale() + 70 > mid.clientHeight; };
+      while (size > 60 && tooTall()){ size -= 3; hl.style.fontSize = size + 'px'; }
+    }
+    var nm = el.querySelector('.m-name'); if (nm) shrink(nm);
+    var cb = el.querySelector('.cta-big'); if (cb){ cb.style.width = '660px'; shrink(cb); }
+
+    var next = function(){
+      clearTimeout(timer);
+      if (pinned !== null) return;
+      if (index === list.length - 1) maybeReload(show); else show();
+    };
+
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      swap(el);
+      progress(secs, s.type === 'video');
+    }); });
+
+    if (s.type === 'video'){
+      var v = el.querySelector('video');
+      v.addEventListener('ended', next);
+      v.addEventListener('error', next);
+      v.addEventListener('loadedmetadata', function(){
+        var d = Math.min(v.duration || secs, s.seconds || 9999);
+        progress(d, false);
+        clearTimeout(timer); timer = setTimeout(next, d * 1000 + 300);
+      });
+      var p = v.play(); if (p && p.catch) p.catch(function(){ setTimeout(next, 1500); });
+      timer = setTimeout(next, (s.seconds || 120) * 1000);
+    } else {
+      timer = setTimeout(next, secs * 1000);
+    }
+    preload(list[(index + 1) % list.length]);
+  }
+
+  function swap(el){
+    var old = current; current = el;
+    el.classList.add('on');
+    if (old){ old.classList.remove('on'); setTimeout(function(){ if (old.parentNode) old.parentNode.removeChild(old); }, 1200); }
+  }
+  function progress(secs, wait){
+    bar.classList.remove('go'); bar.style.width = '0';
+    if (wait) return;
+    void bar.offsetWidth;
+    stage.style.setProperty('--dur', secs + 's');
+    bar.style.width = ''; bar.classList.add('go');
+  }
+  function preload(s){
+    if (!s) return;
+    [].concat(s.photo || (s.type === 'image' ? s.src : []) || []).forEach(function(src){ var i = new Image(); i.src = src; });
+  }
+
+  /* arrow keys step through slides when testing on a laptop */
+  addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight'){ clearTimeout(timer); show(); }
+    if (e.key === 'ArrowLeft'){ clearTimeout(timer); index = (index - 2 + active().length) % active().length; show(); }
+  });
+
+  /* keep the screen awake where the browser allows it */
+  function wake(){ try{ navigator.wakeLock && navigator.wakeLock.request('screen').catch(function(){}); }catch(e){} }
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) wake(); });
+  wake();
+
+  /* wait for the fonts (max 3s) so headlines are measured in Anton, then start */
+  var started = false;
+  function start(){ if (!started){ started = true; show(); } }
+  if (document.fonts && document.fonts.load){
+    Promise.all(['132px Anton','500 34px Barlow','600 27px "Barlow Condensed"','700 27px "Barlow Condensed"']
+      .map(function(f){ return document.fonts.load(f); })).then(start, start);
+  }
+  setTimeout(start, 3000);
+})();
+</script>
+</body>
+</html>
